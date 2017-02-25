@@ -14,30 +14,32 @@
 <TableLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:stretchColumns="0,1,2"
-    android:id="@+id/header">
+    android:id="@+id/table_goals">
     <TableRow >
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        tools:text="Tasks"
-        android:layout_gravity="fill"
-        android:layout_weight="2"
-        android:layout_column="0"/>
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        tools:text="Important"
-        android:layout_weight="1"
-        android:textAlignment="center"
-        android:layout_column="1"/>
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        tools:text="Urgent"
-        android:layout_weight="1"
-        android:textAlignment="center"
-        android:layout_column="2"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Tasks"
+            android:text="Tasks"
+            android:layout_gravity="fill"
+            android:layout_weight="2"
+            android:layout_column="0"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Important"
+            android:text="Important"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:layout_column="1"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Urgent"
+            android:text="Urgent"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:layout_column="2"/>
     </TableRow>
     <TableRow android:layout_marginTop="5dp"
         android:layout_width="match_parent"
@@ -51,44 +53,14 @@
             android:background="#FF909090"
             android:padding="2dip" />
     </TableRow>
-<TableRow android:paddingTop="5dp">
+    <TableRow android:paddingTop="5dp">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="fill"
             tools:text="Finish exam"
-            android:layout_column="0"
-            android:layout_weight="2" />
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:layout_column="1">
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:layout_column="2">
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-</RelativeLayout>
-
-</TableRow>
-
-    <TableRow android:paddingTop="10dp">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            tools:text="Finish exam"
+            android:text="Finish exam"
             android:layout_column="0"
             android:layout_weight="2" />
         <RelativeLayout
@@ -113,11 +85,45 @@
         </RelativeLayout>
 
     </TableRow>
+
+    <TableRow android:paddingTop="10dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill"
+            tools:text="Finish exam"
+            android:text="Finish exam"
+            android:layout_column="0"
+            android:layout_weight="2" />
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_column="1">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_column="2">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+    </TableRow>
+
 </TableLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/activity_vertical_margin"/>
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:clickable="true" />
 </FrameLayout>
