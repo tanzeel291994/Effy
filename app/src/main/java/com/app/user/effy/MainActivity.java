@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static DisplayMetrics displayMetrics;
     Context context;
+    FragmentAddGoalDialog addGoalDialogFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "fab", Toast.LENGTH_SHORT).show();
                 //start a dialog fragment to add goal
                 FragmentManager fm = getSupportFragmentManager();
-                FragmentAddGoalDialog addGoalDialogFragment = FragmentAddGoalDialog.newInstance("Add Goal");
+                 addGoalDialogFragment = FragmentAddGoalDialog.newInstance("Add Goal");
                 addGoalDialogFragment.show(fm, "fragment_edit_name_dialog");
                 /*
                 //Add a new row into tab layout
@@ -81,5 +82,7 @@ public class MainActivity extends AppCompatActivity {
     public void addGoal(View view)
     {
         Toast.makeText(MainActivity.this,"goal added", Toast.LENGTH_SHORT).show();
+        addGoalDialogFragment.dismiss();
+        //Add goal to the content provider.
     }
 }
