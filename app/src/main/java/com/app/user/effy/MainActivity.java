@@ -17,7 +17,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.app.user.effy.data.GoalContract;
 
 public class MainActivity extends AppCompatActivity implements FragmentAddGoalDialog.CustomDialogInterface {
@@ -69,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
         }
     }
 
-    void makeTableRow(String goal_name,Boolean imp,Boolean urg)
+     void makeTableRow(String goal_name,Boolean imp,Boolean urg)
     {
         //Add a new row into table layout
         TableLayout table_goals = (TableLayout) findViewById(R.id.table_goals);
@@ -103,11 +102,13 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
         CheckBox checkbox_imp=new CheckBox(context);
         checkbox_imp.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
         checkbox_imp.setChecked(imp);
+        checkbox_imp.setEnabled(false);
         rel1.addView(checkbox_imp);
         tr.addView(rel1);
         CheckBox checkbox_urg=new CheckBox(context);
         checkbox_urg.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
         checkbox_urg.setChecked(urg);
+        checkbox_urg.setEnabled(false);
         rel2.addView(checkbox_urg);
         tr.addView(rel2);
         table_goals.addView(tr, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));

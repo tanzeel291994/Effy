@@ -11,39 +11,40 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.app.user.effy.MainActivity">
 
-<TableLayout
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:id="@+id/table_goals">
-    <TableRow >
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             tools:text="Tasks"
             android:text="Tasks"
             android:layout_gravity="fill"
-            android:layout_weight="2"
-            android:layout_column="0"/>
+            android:layout_weight="2" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             tools:text="Important"
             android:text="Important"
             android:layout_weight="1"
-            android:textAlignment="center"
-            android:layout_column="1"/>
+            android:textAlignment="center" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             tools:text="Urgent"
             android:text="Urgent"
             android:layout_weight="1"
-            android:textAlignment="center"
-            android:layout_column="2"/>
-    </TableRow>
-    <TableRow android:layout_marginTop="5dp"
+            android:textAlignment="center" />
+    </LinearLayout>
+    <LinearLayout android:layout_marginTop="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <View
             android:id="@+id/line1"
@@ -52,8 +53,11 @@
             android:layout_weight="1"
             android:background="#FF909090"
             android:padding="2dip" />
-    </TableRow>
-    <TableRow android:paddingTop="5dp">
+    </LinearLayout>
+    <LinearLayout android:paddingTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
@@ -61,46 +65,45 @@
             android:layout_gravity="fill"
             tools:text="Finish exam"
             android:text="Finish exam"
-            android:layout_column="0"
             android:layout_weight="2" />
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:layout_column="1">
+            android:gravity="center">
             <CheckBox
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:layout_column="2">
+            android:gravity="center">
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
 
-    </TableRow>
+    </LinearLayout>
 
-    <TableRow android:paddingTop="10dp">
+    <LinearLayout android:paddingTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="fill"
             tools:text="Finish exam"
             android:text="Finish exam"
-            android:layout_column="0"
             android:layout_weight="2" />
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:layout_column="1">
+            android:gravity="center">
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -109,16 +112,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:layout_column="2">
+            android:gravity="center">
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
 
-    </TableRow>
+    </LinearLayout>
 
-</TableLayout>
+</LinearLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
