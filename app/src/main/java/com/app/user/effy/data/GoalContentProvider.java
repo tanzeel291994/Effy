@@ -22,8 +22,8 @@ public class GoalContentProvider extends ContentProvider {
     private static UriMatcher buildUriMatcher()
     {
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(GoalContract.AUTHORITY, GoalContract.PATH_MOVIES, MOVIES);
-        uriMatcher.addURI(GoalContract.AUTHORITY, GoalContract.PATH_MOVIES + "/#", MOVIES_WITH_ID);
+        uriMatcher.addURI(GoalContract.AUTHORITY, GoalContract.PATH_GOALS, MOVIES);
+        uriMatcher.addURI(GoalContract.AUTHORITY, GoalContract.PATH_GOALS + "/#", MOVIES_WITH_ID);
         return uriMatcher;
     }
     private GoalDbHelper mMovieDbHelper;

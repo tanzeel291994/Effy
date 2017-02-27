@@ -7,11 +7,11 @@ import android.provider.BaseColumns;
 public class GoalContract {
     public static final String AUTHORITY = "com.app.user.effy";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
-    public static final String PATH_MOVIES = "goals";
+    public static final String PATH_GOALS = "goals";
 
     public static final class GoalEntry implements BaseColumns {
         public static final Uri CONTENT_URI =
-                BASE_CONTENT_URI.buildUpon().appendPath(PATH_MOVIES).build();
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_GOALS).build();
 
         // Task table and column names
         public static final String TABLE_NAME = "goals";
