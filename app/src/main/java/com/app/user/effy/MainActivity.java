@@ -35,7 +35,7 @@ import com.app.user.effy.data.GoalContract.GoalEntry;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements FragmentAddGoalDialog.CustomDialogInterface
-        ,LoaderManager.LoaderCallbacks<Cursor> {
+        ,LoaderManager.LoaderCallbacks<Cursor> ,GoalCursorAdapter.OnItemClickListener{
 
     private int GOAL_LOADER_ID;
     public static DisplayMetrics displayMetrics;
@@ -51,14 +51,7 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
         context=this;
         GOAL_LOADER_ID =0 ;
         goals_list=new ArrayList<GoalModel>();
-        goalCursorAdapter = new GoalCursorAdapter(this,new GoalCursorAdapter.OnItemClickListener(){
-            @Override
-            public void onItemClick(GoalModel goal_item) {
-                Toast.makeText(getApplicationContext(), "Item Clicked", Toast.LENGTH_LONG).show();
-                Intent intent=new Intent(getApplicationContext(),SubGoals.class);
-                intent.putExtra("goal_item", goal_item);
-                startActivity(intent);
-            };});
+        goalCursorAdapter = new GoalCursorAdapter(this,this);
 
 
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
@@ -87,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
     @Override
     public void addGoalClicked(String goal_name,Boolean imp,Boolean urg) {
         Toast.makeText(MainActivity.this,goal_name+imp+urg, Toast.LENGTH_SHORT).show();
-        makeTableRow(goal_name,imp,urg);
+//      makeTableRow(goal_name,imp,urg);
         //Add to content provider data
         ContentValues contentValues = new ContentValues();
         contentValues.put(GoalEntry.COLUMN_GOAL_NAME,goal_name);
@@ -152,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
         checkbox_urg.setEnabled(false);
         rel2.addView(checkbox_urg);
         linearLayoutChild.addView(rel2);
-
+        Log.i("Tag","inn");
         table_goals.addView(linearLayoutChild, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
     }
 
@@ -174,5 +167,10 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         goalCursorAdapter.swapCursor(null);
+    }
+
+    @Override
+    public void onClick(String goal_name) {
+        Toast.makeText(MainActivity.this,goal_name, Toast.LENGTH_SHORT).show();
     }
 }

@@ -24,7 +24,7 @@ public class GoalCursorAdapter extends RecyclerView.Adapter<GoalCursorAdapter.Go
     private Context mContext;
     ArrayList<GoalModel> goal_list;
     public interface OnItemClickListener {
-        void onItemClick(GoalModel movie_item);
+        void onClick(String goal_name);
     }
 
     private final OnItemClickListener listener;
@@ -40,7 +40,7 @@ public class GoalCursorAdapter extends RecyclerView.Adapter<GoalCursorAdapter.Go
     public GoalCursorAdapter(Context mContext,OnItemClickListener listener) {
         this.mContext = mContext;
         this.listener = listener;
-        goal_list=new ArrayList<GoalModel>();
+        //goal_list=new ArrayList<GoalModel>();
 
     }
 
@@ -53,10 +53,13 @@ public class GoalCursorAdapter extends RecyclerView.Adapter<GoalCursorAdapter.Go
 
         mCursor.moveToPosition(position);
 
-        goal_list.add(new GoalModel(mCursor.getString(goal_name_Index)
+        /*goal_list.add(new GoalModel(mCursor.getString(goal_name_Index)
                 , mCursor.getString(imp_Index),
-                mCursor.getString(urg_Index)));
-        holder.bind(goal_list.get(position), listener);
+                mCursor.getString(urg_Index)));*/
+        //holder.bind(goal_list.get(position), listener);
+        holder.goal_name.setText(mCursor.getString(goal_name_Index));
+        holder.chk_imp.setChecked(Boolean.parseBoolean(mCursor.getString(imp_Index)));
+        holder.chk_urg.setChecked(Boolean.parseBoolean(mCursor.getString(urg_Index)));
     }
 
     @Override
@@ -82,7 +85,7 @@ public class GoalCursorAdapter extends RecyclerView.Adapter<GoalCursorAdapter.Go
         return temp;
     }
 
-    class GoalViewHolder extends RecyclerView.ViewHolder {
+    class GoalViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
 
         CheckBox chk_imp;
         CheckBox chk_urg;
@@ -93,14 +96,25 @@ public class GoalCursorAdapter extends RecyclerView.Adapter<GoalCursorAdapter.Go
             chk_imp=(CheckBox)itemView.findViewById(R.id.chk_imp1);
             chk_urg=(CheckBox)itemView.findViewById(R.id.chk_urg1);
             goal_name=(TextView) itemView.findViewById(R.id.goal_name);
+            itemView.setOnClickListener(this);
 
         }
 
+        @Override
+        public void onClick(View v) {
+            int adapterPosition = getAdapterPosition();
+            //Log.i("tag", String.valueOf(adapterPosition));
+            mCursor.moveToPosition(adapterPosition);
+
+            int symbolColumn = mCursor.getColumnIndex(GoalEntry.COLUMN_GOAL_NAME);
+            listener.onClick(mCursor.getString(symbolColumn));
+        }
+/*
         void bind(final GoalModel goal_item, final OnItemClickListener listener) {
 
             goal_name.setText(goal_item.goal_name);
-            //Log.i("tag",goal_item.imp);
-           chk_imp.setChecked(Boolean.parseBoolean(goal_item.imp));
+            Log.i("tag",goal_item.goal_name);
+            chk_imp.setChecked(Boolean.parseBoolean(goal_item.imp));
             //chk_imp.setChecked(true);
             chk_urg.setChecked(Boolean.parseBoolean(goal_item.urg));
 
@@ -113,6 +127,6 @@ public class GoalCursorAdapter extends RecyclerView.Adapter<GoalCursorAdapter.Go
                 }
 
             });
-        }
+        }*/
     }
 }
