@@ -16,6 +16,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".SubGoals"></activity>
+        <provider
+            android:name="com.app.user.effy.data.GoalContentProvider"
+            android:authorities="com.app.user.effy"
+            android:exported="false"/>
     </application>
 
 </manifest>

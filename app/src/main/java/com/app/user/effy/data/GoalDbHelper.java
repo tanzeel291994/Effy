@@ -30,7 +30,7 @@ public class GoalDbHelper extends SQLiteOpenHelper
                 GoalEntry._ID                + " INTEGER PRIMARY KEY, " +
                 GoalEntry.COLUMN_GOAL_NAME + " TEXT NOT NULL, " +
                 GoalEntry.COLUMN_IMORTANT + " TEXT NOT NULL, " +
-                GoalEntry.COLUMN_URGENT+ " TEXT NOT NULL));";
+                GoalEntry.COLUMN_URGENT+ " TEXT NOT NULL);";
 
         db.execSQL(CREATE_TABLE);
     }

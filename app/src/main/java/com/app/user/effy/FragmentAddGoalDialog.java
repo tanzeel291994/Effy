@@ -1,6 +1,7 @@
 package com.app.user.effy;
 
 
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -8,14 +9,25 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class FragmentAddGoalDialog extends DialogFragment {
+import com.app.user.effy.data.GoalContract;
+
+public class FragmentAddGoalDialog extends DialogFragment{
 
     EditText editText_goal;
+    Button btn_add;
+    CheckBox chk_imp;
+    CheckBox chk_urg;
+    CustomDialogInterface customDI;
     public FragmentAddGoalDialog() {
-        // Required empty public constructor
+
+    }
+    public interface CustomDialogInterface  {
+        public void addGoalClicked(String goal_name,Boolean imp,Boolean urg);
     }
     public static FragmentAddGoalDialog newInstance(String title)
     {
@@ -43,6 +55,17 @@ public class FragmentAddGoalDialog extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         // Get field from view
         editText_goal = (EditText) view.findViewById(R.id.editText_goal);
+        chk_imp=(CheckBox)view.findViewById(R.id.chk_imp);
+        chk_urg=(CheckBox)view.findViewById(R.id.chk_urg);
+        btn_add=(Button)view.findViewById(R.id.add_goal);
+        btn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CustomDialogInterface customDialogInterface=(CustomDialogInterface)getActivity();
+                customDialogInterface.addGoalClicked(editText_goal.getText().toString(),chk_imp.isChecked(),chk_urg.isChecked());
+                dismiss();
+
+            }});
         // Fetch arguments from bundle and set title
         String title = getArguments().getString("title");
         getDialog().setTitle(title);

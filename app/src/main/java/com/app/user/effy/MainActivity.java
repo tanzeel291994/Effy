@@ -1,5 +1,7 @@
 package com.app.user.effy;
 
+import android.content.ContentValues;
+import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +18,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.app.user.effy.data.GoalContract;
+
+public class MainActivity extends AppCompatActivity implements FragmentAddGoalDialog.CustomDialogInterface {
 
     public static DisplayMetrics displayMetrics;
     Context context;
@@ -37,52 +41,75 @@ public class MainActivity extends AppCompatActivity {
                  addGoalDialogFragment = FragmentAddGoalDialog.newInstance("Add Goal");
                 addGoalDialogFragment.show(fm, "fragment_edit_name_dialog");
                 /*
-                //Add a new row into tab layout
-                TableLayout table_goals = (TableLayout) findViewById(R.id.table_goals);
-                TableRow tr = new TableRow(context);
-                tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
 
-                final TextView txt_goal=new TextView(context);
-                txt_goal.setText("Loose weigth");
-                txt_goal.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 2f));
-                txt_goal.setGravity(Gravity.FILL);
-                txt_goal.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View arg0) {
-                        Toast.makeText(MainActivity.this, "clicked", Toast.LENGTH_SHORT).show();
-                       //Go to the sub goals activity from here
-                        Intent intent=new Intent(context,SubGoals.class);
-                        intent.putExtra("goal",txt_goal.getText());
-                        startActivity(intent);
-                    }
-                });
-
-                tr.addView(txt_goal);
-
-                RelativeLayout rel1=new RelativeLayout(context);
-                rel1.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
-                rel1.setGravity(Gravity.CENTER);
-                RelativeLayout rel2=new RelativeLayout(context);
-                rel2.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
-                rel2.setGravity(Gravity.CENTER);
-
-                CheckBox checkbox_imp=new CheckBox(context);
-                checkbox_imp.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-                rel1.addView(checkbox_imp);
-                tr.addView(rel1);
-                CheckBox checkbox_urg=new CheckBox(context);
-                checkbox_urg.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-                rel2.addView(checkbox_urg);
-                tr.addView(rel2);
-                table_goals.addView(tr, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
 */
             }
         });
     }
-    public void addGoal(View view)
+
+    @Override
+    public void addGoalClicked(String goal_name,Boolean imp,Boolean urg) {
+        Toast.makeText(MainActivity.this,goal_name+imp+urg, Toast.LENGTH_SHORT).show();
+        makeTableRow(goal_name,imp,urg);
+        //Add to content provider data
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(GoalContract.GoalEntry.COLUMN_GOAL_NAME,goal_name);
+        contentValues.put(GoalContract.GoalEntry.COLUMN_IMORTANT, imp);
+        contentValues.put(GoalContract.GoalEntry.COLUMN_URGENT, urg);
+        Uri uri=null;
+        try {
+            uri = getContentResolver().insert(GoalContract.GoalEntry.CONTENT_URI, contentValues);
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(getBaseContext(),e.toString(), Toast.LENGTH_LONG).show();
+        }
+        if(uri != null) {
+            Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    void makeTableRow(String goal_name,Boolean imp,Boolean urg)
     {
-        Toast.makeText(MainActivity.this,"goal added", Toast.LENGTH_SHORT).show();
-        addGoalDialogFragment.dismiss();
-        //Add goal to the content provider.
+        //Add a new row into table layout
+        TableLayout table_goals = (TableLayout) findViewById(R.id.table_goals);
+        TableRow tr = new TableRow(context);
+        tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+        final TextView txt_goal=new TextView(context);
+        txt_goal.setText(goal_name);
+        txt_goal.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 2f));
+        txt_goal.setGravity(Gravity.FILL);
+        txt_goal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Toast.makeText(MainActivity.this, "clicked", Toast.LENGTH_SHORT).show();
+                //Go to the sub goals activity from here
+                Intent intent=new Intent(context,SubGoals.class);
+                intent.putExtra("goal",txt_goal.getText());
+                startActivity(intent);
+            }
+        });
+
+        tr.addView(txt_goal);
+
+        RelativeLayout rel1=new RelativeLayout(context);
+        rel1.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+        rel1.setGravity(Gravity.CENTER);
+        RelativeLayout rel2=new RelativeLayout(context);
+        rel2.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+        rel2.setGravity(Gravity.CENTER);
+
+        CheckBox checkbox_imp=new CheckBox(context);
+        checkbox_imp.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+        checkbox_imp.setChecked(imp);
+        rel1.addView(checkbox_imp);
+        tr.addView(rel1);
+        CheckBox checkbox_urg=new CheckBox(context);
+        checkbox_urg.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+        checkbox_urg.setChecked(urg);
+        rel2.addView(checkbox_urg);
+        tr.addView(rel2);
+        table_goals.addView(tr, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
     }
 }
