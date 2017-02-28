@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_sub_goals"
     android:layout_width="match_parent"
@@ -9,5 +9,94 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.app.user.effy.SubGoals">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/table_sub_goals">
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text=" Sub Tasks"
+            android:text=" Sub Tasks"
+            android:layout_gravity="fill"
+            android:layout_weight="1" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Reminder"
+            android:text="Reminder"
+            android:layout_weight="1"
+            android:textAlignment="center" />
+    </LinearLayout>
+        <View
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_weight="1"
+            android:background="#FF909090"
+            android:padding="2dip" />
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:text=" Sub Tasks"
+                android:text="jjust relax and keep calm and enjoy"
+                android:layout_gravity="fill"
+                android:layout_weight="7" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Reminder"
+                android:text="Set"
+                android:layout_weight="1" />
+        </LinearLayout>
 
-</RelativeLayout>
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text=" Sub Tasks"
+            android:text="just relax and keep calm and enjoy just relax and keep calm and enjoy"
+            android:layout_gravity="fill"
+            android:layout_weight="7" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Reminder"
+            android:text="Set"
+            android:layout_weight="1" />
+    </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:text=" Sub Tasks"
+                android:text="just relax and keep calm and enjoy just relax and keep calm and enjoy and keep calm and enjoy"
+                android:layout_gravity="fill"
+                android:layout_weight="7" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Reminder"
+                android:text="Set"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_sub_goals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:clickable="true" />
+</FrameLayout>

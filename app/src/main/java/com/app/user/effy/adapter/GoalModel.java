@@ -7,16 +7,18 @@ import java.io.Serializable;
 
 public class GoalModel implements Parcelable
 {
-    public GoalModel(String goal_name,String imp,String urg)
+    public GoalModel(String goal_name,String imp,String urg,Integer goal_id)
     {
         this.goal_name=goal_name;
         this.urg=urg;
         this.imp=imp;
+        this.goal_id=goal_id;
     }
 
     public String goal_name;
     public String imp;
     public String urg;
+    public Integer goal_id;
 
 
 
@@ -28,14 +30,14 @@ public class GoalModel implements Parcelable
     @Override
     public void writeToParcel(Parcel out, int i) {
         out.writeString(goal_name);
-        out.writeString(imp.toString());
-        out.writeString(urg.toString());
+        out.writeString(imp);
+        out.writeString(urg);
 
     }
     private GoalModel(Parcel in) {
-        //imp = in.readString();
+        imp = in.readString();
         goal_name = in.readString();
-       // urg = in.readString();
+       urg = in.readString();
 
     }
 

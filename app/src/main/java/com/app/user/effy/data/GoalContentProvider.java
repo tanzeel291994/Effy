@@ -26,11 +26,11 @@ public class GoalContentProvider extends ContentProvider {
         uriMatcher.addURI(GoalContract.AUTHORITY, GoalContract.PATH_GOALS + "/#", MOVIES_WITH_ID);
         return uriMatcher;
     }
-    private GoalDbHelper mMovieDbHelper;
+    private GoalDbHelper mGoalDbHelper;
     @Override
     public boolean onCreate() {
         Context context = getContext();
-        mMovieDbHelper = new GoalDbHelper(context);
+        mGoalDbHelper = new GoalDbHelper(context);
         return true;
 
     }
@@ -38,7 +38,7 @@ public class GoalContentProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        final SQLiteDatabase db = mMovieDbHelper.getReadableDatabase();
+        final SQLiteDatabase db = mGoalDbHelper.getReadableDatabase();
         int match = sUriMatcher.match(uri);
         Cursor retCursor;
         switch (match) {
@@ -71,7 +71,7 @@ public class GoalContentProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(Uri uri, ContentValues contentValues) {
-        final SQLiteDatabase db = mMovieDbHelper.getWritableDatabase();
+        final SQLiteDatabase db = mGoalDbHelper.getWritableDatabase();
         int match = sUriMatcher.match(uri);
         Uri returnUri;
         switch (match) {

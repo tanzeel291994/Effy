@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String [] projection={GoalEntry.COLUMN_GOAL_NAME,GoalEntry.COLUMN_IMORTANT,GoalEntry.COLUMN_URGENT};
+        String [] projection={GoalEntry._ID,GoalEntry.COLUMN_GOAL_NAME,GoalEntry.COLUMN_IMORTANT,GoalEntry.COLUMN_URGENT};
         return new CursorLoader(this,
                 GoalEntry.CONTENT_URI,
                 projection,
@@ -170,7 +170,11 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
     }
 
     @Override
-    public void onClick(String goal_name) {
-        Toast.makeText(MainActivity.this,goal_name, Toast.LENGTH_SHORT).show();
+    public void onClick(String goal_name,int goal_id) {
+        Toast.makeText(MainActivity.this,String.valueOf(goal_id), Toast.LENGTH_SHORT).show();
+        Intent intent=new Intent(this,SubGoals.class);
+        intent.putExtra("goal_id",goal_id);
+        intent.putExtra("goal_name",goal_name);
+        startActivity(intent);
     }
 }

@@ -12,7 +12,8 @@ import android.widget.Toast;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_goals);
-        String title_goal=getIntent().getStringExtra("goal");
-        Toast.makeText(SubGoals.this,title_goal, Toast.LENGTH_SHORT).show();
+        int goal_id=getIntent().getIntExtra("goal_id",1);
+        String goal_name=getIntent().getStringExtra("goal_name");
+        //Toast.makeText(SubGoals.this,String.valueOf(title_goal), Toast.LENGTH_SHORT).show();
     }
 }
