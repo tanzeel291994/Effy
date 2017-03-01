@@ -173,9 +173,10 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
     @Override
     public void onClick(String goal_name,int goal_id) {
         Toast.makeText(MainActivity.this,String.valueOf(goal_id), Toast.LENGTH_SHORT).show();
-        Intent intent=new Intent(this,SubGoals.class);
-        intent.putExtra("goal_id",goal_id);
-        intent.putExtra("goal_name",goal_name);
+        Intent intent=new Intent(this,QuoteActivity.class);
+        //Intent intent=new Intent(this,SubGoals.class);
+//        intent.putExtra("goal_id",goal_id);
+  //      intent.putExtra("goal_name",goal_name);
         startActivity(intent);
     }
 }

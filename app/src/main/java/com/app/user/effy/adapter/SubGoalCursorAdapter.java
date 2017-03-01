@@ -48,13 +48,13 @@ public interface OnReminderBtnPressed
     @Override
     public void onBindViewHolder(SubGoalCursorAdapter.GoalViewHolder holder, int position) {
         int sub_goal_name_Index = mCursor.getColumnIndex(GoalContract.SubGoalEntry.COLUMN_SUB_GOAL_NAME);
-        int sub_goal_id = mCursor.getColumnIndex(GoalContract.SubGoalEntry._ID);
+        //int sub_goal_id = mCursor.getColumnIndex(GoalContract.SubGoalEntry._ID);
 
 
         mCursor.moveToPosition(position);
         final String sub_goal_name=mCursor.getString(sub_goal_name_Index);
         holder.sub_goal_name.setText(sub_goal_name);
-        holder.sub_goal_id.setText(String.valueOf(mCursor.getInt(sub_goal_id)));
+        holder.sub_goal_id.setText(String.valueOf(position+1));
         holder.btn_reminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
