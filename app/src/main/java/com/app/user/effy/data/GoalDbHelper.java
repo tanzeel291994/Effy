@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.app.user.effy.data.GoalContract.GoalEntry;
+import com.app.user.effy.data.GoalContract.SubGoalEntry;
 public class GoalDbHelper extends SQLiteOpenHelper
 {
     // The name of the database
@@ -31,8 +32,15 @@ public class GoalDbHelper extends SQLiteOpenHelper
                 GoalEntry.COLUMN_GOAL_NAME + " TEXT NOT NULL, " +
                 GoalEntry.COLUMN_IMORTANT + " TEXT NOT NULL, " +
                 GoalEntry.COLUMN_URGENT+ " TEXT NOT NULL);";
+        // Create tasks table (careful to follow SQL formatting rules)
+        final String CREATE_TABLE_SUB_GOALS = "CREATE TABLE "  + SubGoalEntry.TABLE_NAME_SUB + "(" +
+                SubGoalEntry._ID                + " INTEGER PRIMARY KEY, " +
+                SubGoalEntry.COLUMN_SUB_GOAL_NAME + " TEXT NOT NULL, " +
+                SubGoalEntry.COLUMN_GOAL_ID + " INTEGER NOT NULL, "+
+                "FOREIGN KEY("+SubGoalEntry.COLUMN_GOAL_ID+") REFERENCES " +GoalEntry.TABLE_NAME+"("+GoalEntry._ID+"));";
 
         db.execSQL(CREATE_TABLE);
+        db.execSQL(CREATE_TABLE_SUB_GOALS);
     }
 
 
@@ -43,6 +51,7 @@ public class GoalDbHelper extends SQLiteOpenHelper
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + GoalEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + SubGoalEntry.TABLE_NAME_SUB);
         onCreate(db);
     }
 }

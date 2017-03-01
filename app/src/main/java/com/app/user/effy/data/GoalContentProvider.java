@@ -11,19 +11,24 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 
 import static com.app.user.effy.data.GoalContract.GoalEntry.TABLE_NAME;
+import static com.app.user.effy.data.GoalContract.SubGoalEntry.TABLE_NAME_SUB;
 
 public class GoalContentProvider extends ContentProvider {
 
-    public static final int MOVIES = 100;
-    public static final int MOVIES_WITH_ID = 101;
+    public static final int GOALS = 100;
+    public static final int SUB_GOALS = 200;
+    public static final int GOALS_WITH_ID = 101;
+    public static final int SUB_GOALS_WITH_ID = 201;
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
     private static UriMatcher buildUriMatcher()
     {
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(GoalContract.AUTHORITY, GoalContract.PATH_GOALS, MOVIES);
-        uriMatcher.addURI(GoalContract.AUTHORITY, GoalContract.PATH_GOALS + "/#", MOVIES_WITH_ID);
+        uriMatcher.addURI(GoalContract.AUTHORITY, GoalContract.PATH_GOALS, GOALS);
+        uriMatcher.addURI(GoalContract.AUTHORITY, GoalContract.PATH_SUB_GOALS, SUB_GOALS);
+        uriMatcher.addURI(GoalContract.AUTHORITY, GoalContract.PATH_GOALS + "/#", GOALS_WITH_ID);
+        uriMatcher.addURI(GoalContract.AUTHORITY, GoalContract.PATH_SUB_GOALS + "/#", SUB_GOALS_WITH_ID);
         return uriMatcher;
     }
     private GoalDbHelper mGoalDbHelper;
@@ -42,8 +47,17 @@ public class GoalContentProvider extends ContentProvider {
         int match = sUriMatcher.match(uri);
         Cursor retCursor;
         switch (match) {
-            case MOVIES:
+            case GOALS:
                 retCursor =  db.query(TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
+                break;
+            case SUB_GOALS_WITH_ID:
+                retCursor =  db.query(TABLE_NAME_SUB,
                         projection,
                         selection,
                         selectionArgs,
@@ -75,7 +89,7 @@ public class GoalContentProvider extends ContentProvider {
         int match = sUriMatcher.match(uri);
         Uri returnUri;
         switch (match) {
-            case MOVIES:
+            case GOALS:
                 long id = db.insert(TABLE_NAME, null, contentValues);
                 if ( id > 0 ) {
                     returnUri = ContentUris.withAppendedId(GoalContract.GoalEntry.CONTENT_URI, id);
@@ -83,7 +97,14 @@ public class GoalContentProvider extends ContentProvider {
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 }
                 break;
-
+            case SUB_GOALS:
+                long id_sub = db.insert(TABLE_NAME_SUB, null, contentValues);
+                if ( id_sub > 0 ) {
+                    returnUri = ContentUris.withAppendedId(GoalContract.SubGoalEntry.CONTENT_URI, id_sub);
+                } else {
+                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                }
+                break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
