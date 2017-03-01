@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.app.user.effy.adapter.GoalCursorAdapter;
 import com.app.user.effy.adapter.GoalModel;
+import com.app.user.effy.data.GoalContract;
 import com.app.user.effy.data.GoalContract.GoalEntry;
 
 import java.util.ArrayList;

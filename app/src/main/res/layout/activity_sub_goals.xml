@@ -57,41 +57,14 @@
                 android:layout_weight="1" />
         </LinearLayout>
 
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            tools:text=" Sub Tasks"
-            android:text="just relax and keep calm and enjoy just relax and keep calm and enjoy"
-            android:layout_gravity="fill"
-            android:layout_weight="7" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Reminder"
-            android:text="Set"
-            android:layout_weight="1"
-            android:onClick="setReminder"/>
-    </LinearLayout>
-        <LinearLayout android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text=" Sub Tasks"
-                android:text="just relax and keep calm and enjoy just relax and keep calm and enjoy and keep calm and enjoy"
-                android:layout_gravity="fill"
-                android:layout_weight="7" />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Reminder"
-                android:text="Set"
-                android:layout_weight="1" />
-        </LinearLayout>
+                android:id="@+id/recyclerview1"/>
+        </ScrollView>
     </LinearLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_sub_goals"

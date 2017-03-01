@@ -56,7 +56,7 @@ public class GoalContentProvider extends ContentProvider {
                         null,
                         sortOrder);
                 break;
-            case SUB_GOALS_WITH_ID:
+            case SUB_GOALS:
                 retCursor =  db.query(TABLE_NAME_SUB,
                         projection,
                         selection,
