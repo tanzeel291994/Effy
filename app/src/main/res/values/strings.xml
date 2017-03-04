@@ -23,4 +23,8 @@
     <string name="loading">loading</string>
     <string name="add_your_sub_goal">Add your Sub goal</string>
     <string name="skip">skip</string>
+    <string name="inspirational_quote">Inspirational Quote</string>
+    <string name="deviceId">DBF5F803633D4B33A80B6405AAE61643</string>
+    <string name="get_quote">Get Quote</string>
+    <string name="user_input_error">Please add a goal name</string>
 </resources>

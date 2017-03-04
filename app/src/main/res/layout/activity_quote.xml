@@ -5,8 +5,7 @@
     android:id="@+id/activity_quote"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.app.user.effy.QuoteActivity"
-    android:orientation="vertical">
+    tools:context="com.app.user.effy.QuoteActivity">
 
     <include
         android:id="@+id/toolbar"
@@ -43,11 +42,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/quote_author"
-            android:gravity="right|bottom"/>
-</LinearLayout>
+            android:gravity="end|bottom"/>
+    </LinearLayout>
     </android.support.v7.widget.CardView>
-
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_view"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/activity_vertical_margin">
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/get_quote"
+    android:background="@color/accent"
+   android:onClick="getAnotherQuote"
+    android:textColor="@color/textColorPrimary" />
+</LinearLayout>
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="match_parent"

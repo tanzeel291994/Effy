@@ -5,7 +5,6 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -19,7 +18,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.user.effy.Util.MySingleton;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 
 import org.json.JSONObject;
 import java.util.HashMap;
@@ -42,15 +40,16 @@ public class QuoteActivity extends AppCompatActivity {
         title=(TextView)findViewById(R.id.main_toolbar_title);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setDisplayShowHomeEnabled(true);
-        title.setText("Inspirational Quote");
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        title.setText(R.string.inspirational_quote);
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24px);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(SubGoals.this, "on back pressed", Toast.LENGTH_SHORT).show();
                 onBackPressed();
             }
         });
@@ -65,7 +64,7 @@ public class QuoteActivity extends AppCompatActivity {
         */
 
        AdRequest adRequest = new AdRequest.Builder()
-               .addTestDevice("DBF5F803633D4B33A80B6405AAE61643")
+               .addTestDevice(getString(R.string.deviceId))
               .build();
         mAdView.loadAd(adRequest);
         new QuoteAsyncTaskLoader(mcontext).loadInBackground();
@@ -75,7 +74,7 @@ public class QuoteActivity extends AppCompatActivity {
     public  class QuoteAsyncTaskLoader extends AsyncTaskLoader
     {
 
-        public QuoteAsyncTaskLoader(Context context) {
+         QuoteAsyncTaskLoader(Context context) {
             super(context);
         }
 
@@ -149,6 +148,11 @@ public class QuoteActivity extends AppCompatActivity {
             mAdView.destroy();
         }
         super.onDestroy();
+    }
+
+    public void getAnotherQuote(View view)
+    {
+        new QuoteAsyncTaskLoader(mcontext).loadInBackground();
     }
 }
 

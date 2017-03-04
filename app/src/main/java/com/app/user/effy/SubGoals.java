@@ -132,6 +132,11 @@ public class SubGoals extends AppCompatActivity implements FragmentAddSubDialog.
     @Override
     public void addGoalClicked(String sub_goal_name)
     {
+        if(sub_goal_name.isEmpty())
+        {
+            Toast.makeText(getBaseContext(), R.string.user_input_error, Toast.LENGTH_LONG).show();
+            return;
+        }
         ContentValues contentValues = new ContentValues();
         contentValues.put(GoalContract.SubGoalEntry.COLUMN_SUB_GOAL_NAME,sub_goal_name);
         contentValues.put(GoalContract.SubGoalEntry.COLUMN_GOAL_ID,goal_id);

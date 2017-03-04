@@ -138,9 +138,13 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
 
     @Override
     public void addGoalClicked(String goal_name,Boolean imp,Boolean urg) {
-        Toast.makeText(MainActivity.this,goal_name+imp+urg, Toast.LENGTH_SHORT).show();
-//      makeTableRow(goal_name,imp,urg);
-        //Add to content provider data
+
+        if(goal_name.isEmpty())
+        {
+            Toast.makeText(getBaseContext(), R.string.user_input_error, Toast.LENGTH_LONG).show();
+            return;
+        }
+
         ContentValues contentValues = new ContentValues();
         contentValues.put(GoalEntry.COLUMN_GOAL_NAME,goal_name);
         contentValues.put(GoalEntry.COLUMN_IMORTANT, String.valueOf(imp));
