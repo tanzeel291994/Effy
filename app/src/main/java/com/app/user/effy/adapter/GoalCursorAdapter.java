@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.app.user.effy.R;
+import com.app.user.effy.data.GoalContract;
 import com.app.user.effy.data.GoalContract.GoalEntry;
 
 import java.util.ArrayList;
@@ -60,7 +61,7 @@ public class GoalCursorAdapter extends RecyclerView.Adapter<GoalCursorAdapter.Go
         //holder.bind(goal_list.get(position), listener);
         holder.goal_name.setText(mCursor.getString(goal_name_Index));
 //        if(holder.goal_id==null)
-//       holder.goal_id.setText(String.valueOf(mCursor.getInt(goal_id_Index)));
+       holder.goal_id.setText(String.valueOf(mCursor.getInt(goal_id_Index)));
         //holder.goal_id.setVisibility(View.INVISIBLE);
         holder.chk_imp.setChecked(Boolean.parseBoolean(mCursor.getString(imp_Index)));
         holder.chk_urg.setChecked(Boolean.parseBoolean(mCursor.getString(urg_Index)));
@@ -75,6 +76,11 @@ public class GoalCursorAdapter extends RecyclerView.Adapter<GoalCursorAdapter.Go
         return mCursor.getCount();
     }
 
+    public String getIdByPosition(int position)
+    {
+        mCursor.moveToPosition(position);
+        return mCursor.getString(mCursor.getColumnIndex(GoalEntry._ID));
+    }
     public Cursor swapCursor(Cursor c) {
         // check if this cursor is the same as the previous cursor (mCursor)
         if (mCursor == c) {
@@ -102,7 +108,7 @@ public class GoalCursorAdapter extends RecyclerView.Adapter<GoalCursorAdapter.Go
             chk_imp=(CheckBox)itemView.findViewById(R.id.chk_imp1);
             chk_urg=(CheckBox)itemView.findViewById(R.id.chk_urg1);
             goal_name=(TextView) itemView.findViewById(R.id.goal_name);
-            //goal_id=(TextView) itemView.findViewById(R.id.goal_id);
+            goal_id=(TextView) itemView.findViewById(R.id.goal_id);
 //            goal_id.setVisibility(View.INVISIBLE);
             itemView.setOnClickListener(this);
 

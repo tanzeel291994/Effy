@@ -11,12 +11,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -40,7 +42,8 @@ import com.app.user.effy.data.GoalContract.GoalEntry;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements FragmentAddGoalDialog.CustomDialogInterface
-        ,LoaderManager.LoaderCallbacks<Cursor> ,GoalCursorAdapter.OnItemClickListener{
+        ,LoaderManager.LoaderCallbacks<Cursor> ,GoalCursorAdapter.OnItemClickListener,
+        SwipeRefreshLayout.OnRefreshListener{
 
     private int GOAL_LOADER_ID;
     public static DisplayMetrics displayMetrics;
@@ -51,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
     ArrayList<GoalModel> goals_list;
     Toolbar mToolbar;
     TextView title_toolbar;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +77,10 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
 //        getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        swipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setRefreshing(true);
+        onRefresh();
 
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -86,12 +95,29 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "fab", Toast.LENGTH_SHORT).show();
                 //start a dialog fragment to add goal
+                //String[] selectionArgs={"1"};
+
+
                 FragmentManager fm = getSupportFragmentManager();
                  addGoalDialogFragment = FragmentAddGoalDialog.newInstance("Add Goal");
                  addGoalDialogFragment.show(fm, "fragment_edit_name_dialog");
 
             }
         });
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                String goal_id = goalCursorAdapter.getIdByPosition(viewHolder.getAdapterPosition());
+               // Log.i("tag",GoalEntry.makeUriForStock(goal_id).toString());
+                getContentResolver().delete(GoalEntry.CONTENT_URI,GoalEntry._ID+" = "+goal_id,null);
+            }
+        }).attachToRecyclerView(recyclerview);
 
         getSupportLoaderManager().initLoader(GOAL_LOADER_ID, null, this);
     }
@@ -114,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
         if (id == R.id.action_get_quote) {
             Intent intent=new Intent(this,QuoteActivity.class);
             startActivity(intent);
+            //getContentResolver().delete(GoalEntry.makeUriForStock("1"),GoalEntry._ID,null);
             return true;
         }
 
@@ -203,11 +230,14 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        swipeRefreshLayout.setRefreshing(false);
         goalCursorAdapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+        swipeRefreshLayout.setRefreshing(false);
+
         goalCursorAdapter.swapCursor(null);
     }
 
@@ -218,5 +248,10 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
         intent.putExtra("goal_id",goal_id);
         intent.putExtra("goal_name",goal_name);
         startActivity(intent);
+    }
+
+    @Override
+    public void onRefresh() {
+
     }
 }

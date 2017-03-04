@@ -37,13 +37,20 @@ public class GoalDbHelper extends SQLiteOpenHelper
                 SubGoalEntry._ID                + " INTEGER PRIMARY KEY, " +
                 SubGoalEntry.COLUMN_SUB_GOAL_NAME + " TEXT NOT NULL, " +
                 SubGoalEntry.COLUMN_GOAL_ID + " INTEGER NOT NULL, "+
-                "FOREIGN KEY("+SubGoalEntry.COLUMN_GOAL_ID+") REFERENCES " +GoalEntry.TABLE_NAME+"("+GoalEntry._ID+"));";
+                "FOREIGN KEY("+SubGoalEntry.COLUMN_GOAL_ID+") REFERENCES " +GoalEntry.TABLE_NAME+"("+GoalEntry._ID+") ON DELETE CASCADE);";
 
         db.execSQL(CREATE_TABLE);
         db.execSQL(CREATE_TABLE_SUB_GOALS);
     }
 
-
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        if (!db.isReadOnly()) {
+            // Enable foreign key constraints
+            db.execSQL("PRAGMA foreign_keys=ON;");
+        }
+    }
     /**
      * This method discards the old table of data and calls onCreate to recreate a new one.
      * This only occurs when the version number for this database (DATABASE_VERSION) is incremented.

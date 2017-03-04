@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import static com.app.user.effy.data.GoalContract.GoalEntry.TABLE_NAME;
 import static com.app.user.effy.data.GoalContract.SubGoalEntry.TABLE_NAME_SUB;
@@ -113,8 +114,33 @@ public class GoalContentProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(Uri uri, String s, String[] strings) {
-        return 0;
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+        final SQLiteDatabase db = mGoalDbHelper.getWritableDatabase();
+        int rowsDeleted;
+
+        if (null == selection) {
+            selection = "1";
+        }
+        switch (sUriMatcher.match(uri)) {
+            case GOALS:
+                Log.i("tag","in");
+
+                   rowsDeleted = db.delete(
+                           GoalContract.GoalEntry.TABLE_NAME,
+                           selection,
+                           selectionArgs
+                   );
+                Log.i("tag", String.valueOf(rowsDeleted));
+                break;
+
+            default:
+                throw new UnsupportedOperationException("Unknown URI:" + uri);
+        }
+
+        if (rowsDeleted != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return rowsDeleted;
     }
 
     @Override

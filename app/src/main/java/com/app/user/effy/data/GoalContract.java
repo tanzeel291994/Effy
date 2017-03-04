@@ -4,6 +4,8 @@ package com.app.user.effy.data;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+import java.net.URI;
+
 public class GoalContract {
     public static final String AUTHORITY = "com.app.user.effy";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
@@ -22,7 +24,9 @@ public class GoalContract {
         public static final String COLUMN_GOAL_NAME = "goal_name";
         public static final String COLUMN_IMORTANT = "important";
         public static final String COLUMN_URGENT= "urgent";
-
+        public static Uri makeUriForStock(String goal_id) {
+            return CONTENT_URI.buildUpon().appendPath(goal_id).build();
+        }
 
     }
     public static final class SubGoalEntry implements BaseColumns {
