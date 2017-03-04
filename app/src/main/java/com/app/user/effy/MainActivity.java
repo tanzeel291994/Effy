@@ -16,10 +16,14 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -45,14 +49,28 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
     GoalCursorAdapter goalCursorAdapter;
     FragmentAddGoalDialog addGoalDialogFragment;
     ArrayList<GoalModel> goals_list;
+    Toolbar mToolbar;
+    TextView title_toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        title_toolbar=(TextView)findViewById(R.id.main_toolbar_title);
+        String name=getIntent().getStringExtra("name");
+        Toast.makeText(MainActivity.this,"Hey "+name+" lets up your Effy quoitient:)", Toast.LENGTH_SHORT).show();
         context=this;
         GOAL_LOADER_ID =0 ;
         goals_list=new ArrayList<GoalModel>();
         goalCursorAdapter = new GoalCursorAdapter(this,this);
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        title_toolbar.setText("Effy");
+        //title_toolbar.setGravity(Gravity.CENTER);
+//        LinearLayout r = (LinearLayout) ((ViewGroup) title_toolbar.getParent()).getParent();
+  //      r.setGravity(Gravity.CENTER);
+        setSupportActionBar(mToolbar);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
@@ -76,6 +94,30 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
         });
 
         getSupportLoaderManager().initLoader(GOAL_LOADER_ID, null, this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_get_quote) {
+            Intent intent=new Intent(this,QuoteActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -161,7 +203,6 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-       // Log.i("tag",data.toString());
         goalCursorAdapter.swapCursor(data);
     }
 
@@ -173,10 +214,9 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
     @Override
     public void onClick(String goal_name,int goal_id) {
         Toast.makeText(MainActivity.this,String.valueOf(goal_id), Toast.LENGTH_SHORT).show();
-        Intent intent=new Intent(this,QuoteActivity.class);
-        //Intent intent=new Intent(this,SubGoals.class);
-//        intent.putExtra("goal_id",goal_id);
-  //      intent.putExtra("goal_name",goal_name);
+        Intent intent=new Intent(this,SubGoals.class);
+        intent.putExtra("goal_id",goal_id);
+        intent.putExtra("goal_name",goal_name);
         startActivity(intent);
     }
 }

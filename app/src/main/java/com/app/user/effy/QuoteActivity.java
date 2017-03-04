@@ -4,7 +4,10 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -14,15 +17,21 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.user.effy.Util.MySingleton;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
 public class QuoteActivity extends AppCompatActivity {
 
-    TextView quote_body;
+    TextView quote_body,title;
     TextView quote_author;
     Context mcontext;
+    Toolbar mToolbar;
+    AdView mAdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +39,34 @@ public class QuoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quote);
         quote_body=(TextView) findViewById(R.id.quote_body);
         quote_author=(TextView) findViewById(R.id.quote_author);
+        title=(TextView)findViewById(R.id.main_toolbar_title);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+        title.setText("Inspirational Quote");
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24px);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(SubGoals.this, "on back pressed", Toast.LENGTH_SHORT).show();
+                onBackPressed();
+            }
+        });
+        //MobileAds.initialize(getApplicationContext(),"ca-app-pub-7407657038959005~7713917972");
+
+        mAdView = (AdView) findViewById(R.id.adView);
+      //while launching
+        /*
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        */
+
+       AdRequest adRequest = new AdRequest.Builder()
+               .addTestDevice("DBF5F803633D4B33A80B6405AAE61643")
+              .build();
+        mAdView.loadAd(adRequest);
         new QuoteAsyncTaskLoader(mcontext).loadInBackground();
 
 
@@ -88,10 +125,30 @@ public class QuoteActivity extends AppCompatActivity {
         return  null;
         }
 
-
-
-
+    }
+    @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
 
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
+    }
 }
+
+

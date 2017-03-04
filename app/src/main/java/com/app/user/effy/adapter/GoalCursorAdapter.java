@@ -60,7 +60,7 @@ public class GoalCursorAdapter extends RecyclerView.Adapter<GoalCursorAdapter.Go
         //holder.bind(goal_list.get(position), listener);
         holder.goal_name.setText(mCursor.getString(goal_name_Index));
 //        if(holder.goal_id==null)
-       holder.goal_id.setText(String.valueOf(mCursor.getInt(goal_id_Index)));
+//       holder.goal_id.setText(String.valueOf(mCursor.getInt(goal_id_Index)));
         //holder.goal_id.setVisibility(View.INVISIBLE);
         holder.chk_imp.setChecked(Boolean.parseBoolean(mCursor.getString(imp_Index)));
         holder.chk_urg.setChecked(Boolean.parseBoolean(mCursor.getString(urg_Index)));
@@ -102,8 +102,8 @@ public class GoalCursorAdapter extends RecyclerView.Adapter<GoalCursorAdapter.Go
             chk_imp=(CheckBox)itemView.findViewById(R.id.chk_imp1);
             chk_urg=(CheckBox)itemView.findViewById(R.id.chk_urg1);
             goal_name=(TextView) itemView.findViewById(R.id.goal_name);
-            goal_id=(TextView) itemView.findViewById(R.id.goal_id);
-            goal_id.setVisibility(View.INVISIBLE);
+            //goal_id=(TextView) itemView.findViewById(R.id.goal_id);
+//            goal_id.setVisibility(View.INVISIBLE);
             itemView.setOnClickListener(this);
 
         }

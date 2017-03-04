@@ -5,54 +5,62 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.app.user.effy.MainActivity">
 
-<LinearLayout
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:id="@+id/table_goals">
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingStart="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingEnd="@dimen/activity_vertical_margin">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             tools:text="Tasks"
             android:text="Tasks"
             android:layout_gravity="fill"
-            android:layout_weight="2" />
+            android:layout_weight="1.5"
+            android:textSize="20sp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             tools:text="Important"
             android:text="Important"
             android:layout_weight="1"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="20sp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             tools:text="Urgent"
             android:text="Urgent"
             android:layout_weight="1"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="18sp"/>
     </LinearLayout>
-    <LinearLayout android:layout_marginTop="5dp"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/activity_vertical_margin"
+        android:paddingStart="@dimen/activity_vertical_margin">
 
         <View
             android:id="@+id/line1"
             android:layout_width="match_parent"
             android:layout_height="1dip"
-            android:layout_weight="1"
             android:background="#FF909090"
-            android:padding="2dip" />
+            android:padding="4dip" />
     </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
@@ -60,7 +68,7 @@
     <android.support.v7.widget.RecyclerView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-        android:id="@+id/recyclerview"/>
+        android:id="@+id/recyclerview" />
     </ScrollView>
 </LinearLayout>
     <android.support.design.widget.FloatingActionButton
@@ -68,6 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:src="@drawable/ic_border_color_white_24px"
         android:layout_margin="@dimen/activity_vertical_margin"
         android:clickable="true" />
 </FrameLayout>

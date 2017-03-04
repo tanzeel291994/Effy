@@ -4,59 +4,50 @@
     android:id="@+id/activity_sub_goals"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.app.user.effy.SubGoals">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/table_sub_goals">
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="@dimen/activity_vertical_margin">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             tools:text=" Sub Tasks"
             android:text=" Sub Tasks"
             android:layout_gravity="fill"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textSize="18sp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             tools:text="Reminder"
             android:text="Reminder"
-            android:layout_weight="1"
-            android:textAlignment="center" />
+            android:layout_weight="1.5"
+            android:textAlignment="center"
+            android:textSize="18sp"/>
     </LinearLayout>
-        <View
-            android:id="@+id/line2"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:layout_weight="1"
-            android:background="#FF909090"
-            android:padding="2dip" />
-        <LinearLayout android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                tools:text=" Sub Tasks"
-                android:text="jjust relax and keep calm and enjoy"
-                android:layout_gravity="fill"
-                android:layout_weight="7" />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Reminder"
-                android:text="Set"
-                android:layout_weight="1" />
-        </LinearLayout>
+            android:orientation="horizontal"
+            android:paddingEnd="@dimen/activity_vertical_margin"
+            android:paddingStart="@dimen/activity_vertical_margin">
 
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="#FF909090"
+                android:padding="6dip" />
+        </LinearLayout>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

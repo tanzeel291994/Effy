@@ -22,11 +22,16 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.user.effy.adapter.GoalCursorAdapter;
 import com.app.user.effy.adapter.SubGoalCursorAdapter;
 import com.app.user.effy.data.GoalContract;
+
+import org.w3c.dom.Text;
 
 public class SubGoals extends AppCompatActivity implements FragmentAddSubDialog.CustomSubDialogInterface
         ,LoaderManager.LoaderCallbacks<Cursor>,SubGoalCursorAdapter.OnReminderBtnPressed{
@@ -41,6 +46,8 @@ public class SubGoals extends AppCompatActivity implements FragmentAddSubDialog.
     FragmentAddSubDialog addSubGoalDialogFragment;
     RecyclerView recyclerview;
     SubGoalCursorAdapter subGoalCursorAdapter;
+    Toolbar mToolbar;
+    TextView title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +55,21 @@ public class SubGoals extends AppCompatActivity implements FragmentAddSubDialog.
         goal_id = getIntent().getIntExtra("goal_id", 1);
         goal_name = getIntent().getStringExtra("goal_name");
         subGoalCursorAdapter = new SubGoalCursorAdapter(this,this);
+        title=(TextView)findViewById(R.id.main_toolbar_title);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+        title.setText(goal_name);
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24px);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(SubGoals.this, "on back pressed", Toast.LENGTH_SHORT).show();
+                onBackPressed();
+            }
+        });
 
 
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview1);
