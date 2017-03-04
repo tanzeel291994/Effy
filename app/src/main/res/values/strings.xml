@@ -8,4 +8,19 @@
     <string name="btn_logout_from_google">Logout from Google</string>
     <string name="btn_revoke_access">Revoke Access</string>
     <string name="banner_home_footer">ca-app-pub-7407657038959005/9190651177</string>
+    <string name="add_your_goal">Add your goal</string>
+    <string name="urgent">Urgent</string>
+    <string name="important">Important</string>
+    <string name="add">Add</string>
+    <string name="tasks">Tasks</string>
+    <string name="set">Set</string>
+    <string name="sub_tasks">Sub Tasks</string>
+    <string name="reminder">Reminder</string>
+    <string name="effy">Effy</string>
+    <string name="greeting">" lets up your Effy quoitient:)"</string>
+    <string name="hey">"Hey "</string>
+    <string name="error_goal">Could not add goal</string>
+    <string name="loading">loading</string>
+    <string name="add_your_sub_goal">Add your Sub goal</string>
+    <string name="skip">skip</string>
 </resources>

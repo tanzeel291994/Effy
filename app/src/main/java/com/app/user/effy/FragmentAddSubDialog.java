@@ -41,7 +41,7 @@ public class FragmentAddSubDialog extends DialogFragment{
     public void onResume() {
         super.onResume();
         int dialogWidth = (int)(MainActivity.displayMetrics.widthPixels);
-        int dialogHeight = (int)(MainActivity.displayMetrics.heightPixels*0.45);
+        int dialogHeight = (int)(MainActivity.displayMetrics.heightPixels*0.35);
         getDialog().getWindow().setLayout(dialogWidth, dialogHeight);
     }
     @Override

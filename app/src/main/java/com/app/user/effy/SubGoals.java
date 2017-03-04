@@ -14,12 +14,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +36,7 @@ import com.app.user.effy.data.GoalContract;
 import org.w3c.dom.Text;
 
 public class SubGoals extends AppCompatActivity implements FragmentAddSubDialog.CustomSubDialogInterface
-        ,LoaderManager.LoaderCallbacks<Cursor>,SubGoalCursorAdapter.OnReminderBtnPressed{
+        ,LoaderManager.LoaderCallbacks<Cursor>,SubGoalCursorAdapter.OnReminderBtnPressed, SwipeRefreshLayout.OnRefreshListener{
 
     private int SUB_GOAL_LOADER_ID;
     int requestCode = 0;
@@ -48,6 +50,8 @@ public class SubGoals extends AppCompatActivity implements FragmentAddSubDialog.
     SubGoalCursorAdapter subGoalCursorAdapter;
     Toolbar mToolbar;
     TextView title;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +81,26 @@ public class SubGoals extends AppCompatActivity implements FragmentAddSubDialog.
         recyclerview.setLayoutManager(mLayoutManager);
         recyclerview.setItemAnimator(new DefaultItemAnimator());
         recyclerview.setAdapter(subGoalCursorAdapter);
-        //Toast.makeText(SubGoals.this,String.valueOf(title_goal), Toast.LENGTH_SHORT).show();
+
+        swipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.swipe_refresh_2);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setRefreshing(true);
+        onRefresh();
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                String sub_goal_id = subGoalCursorAdapter.getIdByPosition(viewHolder.getAdapterPosition());
+                // Log.i("tag",GoalEntry.makeUriForStock(goal_id).toString());
+                getContentResolver().delete(GoalContract.SubGoalEntry.CONTENT_URI, GoalContract.SubGoalEntry._ID+" = "+sub_goal_id,null);
+            }
+        }).attachToRecyclerView(recyclerview);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_sub_goals);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,11 +161,13 @@ public class SubGoals extends AppCompatActivity implements FragmentAddSubDialog.
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        swipeRefreshLayout.setRefreshing(false);
         subGoalCursorAdapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+        swipeRefreshLayout.setRefreshing(false);
         subGoalCursorAdapter.swapCursor(null);
     }
 
@@ -153,5 +178,10 @@ public class SubGoals extends AppCompatActivity implements FragmentAddSubDialog.
         //calIntent.setType("vnd.android.cursor.item/event");
         calIntent.putExtra(CalendarContract.Events.TITLE,sub_goal_name);
         startActivityForResult(calIntent, requestCode);
+    }
+
+    @Override
+    public void onRefresh() {
+
     }
 }

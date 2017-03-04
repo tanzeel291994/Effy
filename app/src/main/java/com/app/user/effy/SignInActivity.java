@@ -2,12 +2,14 @@ package com.app.user.effy;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -32,6 +34,7 @@ public class SignInActivity extends AppCompatActivity implements  View.OnClickLi
 
     private SignInButton btnSignIn;
     private Button skipBtn;
+    TextView mainTxt;
 
 
     @Override
@@ -41,17 +44,14 @@ public class SignInActivity extends AppCompatActivity implements  View.OnClickLi
 
         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         skipBtn = (Button) findViewById(R.id.skipBtn);
-
-
-
         btnSignIn.setOnClickListener(this);
         skipBtn.setOnClickListener(this);
-  //      btnRevokeAccess.setOnClickListener(this);
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
-
+        Typeface custom_font = Typeface.createFromAsset(getAssets(),"font/BEBAS___.ttf");
+        mainTxt=(TextView)findViewById(R.id.main) ;
+        mainTxt.setTypeface(custom_font);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
@@ -75,16 +75,6 @@ public class SignInActivity extends AppCompatActivity implements  View.OnClickLi
         startActivity(intent);
     }
 
-    private void revokeAccess() {
-        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
-                        //updateUI(false);
-                    }
-                });
-    }
-
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
@@ -103,19 +93,10 @@ public class SignInActivity extends AppCompatActivity implements  View.OnClickLi
             intent.putExtra("name",personName);
             startActivity(intent);
 
-//            txtName.setText(personName);
-  //          txtEmail.setText(email);
-    /*        Glide.with(getApplicationContext()).load(personPhotoUrl)
-                    .thumbnail(0.5f)
-                    .crossFade()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(imgProfilePic);
-*/
-            //updateUI(true);
-        } else {
-            // Signed out, show unauthenticated UI.
-            //updateUI(false);
-            Toast.makeText(SignInActivity.this, "Could not login", Toast.LENGTH_SHORT).show();
+        } else
+        {
+
+            //Toast.makeText(SignInActivity.this, "Could not login", Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -183,7 +164,7 @@ public class SignInActivity extends AppCompatActivity implements  View.OnClickLi
     private void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage("loading");
+            mProgressDialog.setMessage(getString(R.string.loading));
             mProgressDialog.setIndeterminate(true);
         }
 

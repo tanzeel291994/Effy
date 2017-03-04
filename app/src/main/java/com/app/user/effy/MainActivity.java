@@ -2,8 +2,7 @@ package com.app.user.effy;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.net.Uri;
-import android.support.constraint.solver.Goal;
+import android.graphics.Typeface;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
@@ -20,23 +19,15 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.user.effy.adapter.GoalCursorAdapter;
 import com.app.user.effy.adapter.GoalModel;
-import com.app.user.effy.data.GoalContract;
 import com.app.user.effy.data.GoalContract.GoalEntry;
 
 import java.util.ArrayList;
@@ -45,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
         ,LoaderManager.LoaderCallbacks<Cursor> ,GoalCursorAdapter.OnItemClickListener,
         SwipeRefreshLayout.OnRefreshListener{
 
-    private int GOAL_LOADER_ID;
     public static DisplayMetrics displayMetrics;
     Context context;
     RecyclerView recyclerview;
@@ -62,19 +52,22 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
         setContentView(R.layout.activity_main);
         title_toolbar=(TextView)findViewById(R.id.main_toolbar_title);
         String name=getIntent().getStringExtra("name");
-        Toast.makeText(MainActivity.this,"Hey "+name+" lets up your Effy quoitient:)", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this,getString(R.string.hey)+name+getString(R.string.greeting), Toast.LENGTH_LONG).show();
         context=this;
-        GOAL_LOADER_ID =0 ;
-        goals_list=new ArrayList<GoalModel>();
+        int GOAL_LOADER_ID =0 ;
+        goals_list=new ArrayList<>();
         goalCursorAdapter = new GoalCursorAdapter(this,this);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        title_toolbar.setText("Effy");
+        title_toolbar.setText(R.string.effy);
+        title_toolbar.setTextSize(Float.parseFloat("32"));
+        Typeface custom_font = Typeface.createFromAsset(getAssets(),"font/BEBAS___.ttf");
+        title_toolbar.setTypeface(custom_font);
         //title_toolbar.setGravity(Gravity.CENTER);
 //        LinearLayout r = (LinearLayout) ((ViewGroup) title_toolbar.getParent()).getParent();
   //      r.setGravity(Gravity.CENTER);
         setSupportActionBar(mToolbar);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if(getSupportActionBar()!=null)
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         swipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.swipe_refresh);
@@ -93,14 +86,10 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "fab", Toast.LENGTH_SHORT).show();
-                //start a dialog fragment to add goal
-                //String[] selectionArgs={"1"};
-
-
+             //   Toast.makeText(MainActivity.this, "fab", Toast.LENGTH_SHORT).show();
                 FragmentManager fm = getSupportFragmentManager();
-                 addGoalDialogFragment = FragmentAddGoalDialog.newInstance("Add Goal");
-                 addGoalDialogFragment.show(fm, "fragment_edit_name_dialog");
+                addGoalDialogFragment = FragmentAddGoalDialog.newInstance("Add Goal");
+                addGoalDialogFragment.show(fm,"fragment_add_goal");
 
             }
         });
@@ -156,67 +145,15 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
         contentValues.put(GoalEntry.COLUMN_GOAL_NAME,goal_name);
         contentValues.put(GoalEntry.COLUMN_IMORTANT, String.valueOf(imp));
         contentValues.put(GoalEntry.COLUMN_URGENT,String.valueOf(urg));
-        Uri uri=null;
+
         try {
-            uri = getContentResolver().insert(GoalEntry.CONTENT_URI, contentValues);
+           getContentResolver().insert(GoalEntry.CONTENT_URI, contentValues);
         }
         catch (Exception e)
         {
-            Toast.makeText(getBaseContext(),e.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), R.string.error_goal, Toast.LENGTH_LONG).show();
         }
-        if(uri != null) {
-            Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_LONG).show();
-        }
-    }
 
-     void makeTableRow(String goal_name,Boolean imp,Boolean urg)
-    {
-        //Add a new row into linear layout
-        LinearLayout table_goals = (LinearLayout) findViewById(R.id.table_goals);
-        LinearLayout linearLayoutChild = new LinearLayout(context);
-        linearLayoutChild.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-
-        final TextView txt_goal=new TextView(context);
-        txt_goal.setText(goal_name);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.weight = 2.0f;
-        params.gravity = Gravity.FILL;
-        txt_goal.setLayoutParams(params);
-        /*txt_goal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                Toast.makeText(MainActivity.this, "clicked", Toast.LENGTH_SHORT).show();
-                //Go to the sub goals activity from here
-                Intent intent=new Intent(context,SubGoals.class);
-                intent.putExtra("goal",txt_goal.getText());
-                startActivity(intent);
-            }
-        });
-        */
-        linearLayoutChild.addView(txt_goal);
-
-        RelativeLayout rel1=new RelativeLayout(context);
-        rel1.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
-        rel1.setGravity(Gravity.CENTER);
-        RelativeLayout rel2=new RelativeLayout(context);
-        rel2.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
-        rel2.setGravity(Gravity.CENTER);
-
-        CheckBox checkbox_imp=new CheckBox(context);
-        checkbox_imp.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-        checkbox_imp.setChecked(imp);
-        checkbox_imp.setEnabled(false);
-        rel1.addView(checkbox_imp);
-        linearLayoutChild.addView(rel1);
-
-        CheckBox checkbox_urg=new CheckBox(context);
-        checkbox_urg.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-        checkbox_urg.setChecked(urg);
-        checkbox_urg.setEnabled(false);
-        rel2.addView(checkbox_urg);
-        linearLayoutChild.addView(rel2);
-        Log.i("Tag","inn");
-        table_goals.addView(linearLayoutChild, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
     }
 
     @Override
@@ -243,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
 
     @Override
     public void onClick(String goal_name,int goal_id) {
-        Toast.makeText(MainActivity.this,String.valueOf(goal_id), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainActivity.this,String.valueOf(goal_id), Toast.LENGTH_SHORT).show();
         Intent intent=new Intent(this,SubGoals.class);
         intent.putExtra("goal_id",goal_id);
         intent.putExtra("goal_name",goal_name);

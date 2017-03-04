@@ -16,23 +16,28 @@
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/activity_vertical_margin">
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingStart="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingEnd="@dimen/activity_vertical_margin">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:text=" Sub Tasks"
-            android:text=" Sub Tasks"
+            tools:text="@string/sub_tasks"
+            android:textColor="@color/primary_text"
+            android:text="@string/sub_tasks"
             android:layout_gravity="fill"
             android:layout_weight="1"
-            android:textSize="18sp"/>
+            android:textSize="20sp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             tools:text="Reminder"
-            android:text="Reminder"
-            android:layout_weight="1.5"
+            android:text="@string/reminder"
+            android:layout_weight="1"
+            android:textColor="@color/primary_text"
             android:textAlignment="center"
-            android:textSize="18sp"/>
+            android:textSize="20sp"/>
     </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,17 +50,23 @@
                 android:id="@+id/line2"
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
-                android:background="#FF909090"
-                android:padding="6dip" />
+                android:background="@color/divider"
+                android:padding="4dip" />
         </LinearLayout>
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_height="wrap_content"
                 android:id="@+id/recyclerview1"/>
         </ScrollView>
+        </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_sub_goals"
@@ -63,5 +74,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/activity_vertical_margin"
+        android:src="@drawable/ic_border_color_white_24px"
         android:clickable="true" />
 </FrameLayout>

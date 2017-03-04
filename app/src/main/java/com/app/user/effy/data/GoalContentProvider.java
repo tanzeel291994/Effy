@@ -123,7 +123,6 @@ public class GoalContentProvider extends ContentProvider {
         }
         switch (sUriMatcher.match(uri)) {
             case GOALS:
-                Log.i("tag","in");
 
                    rowsDeleted = db.delete(
                            GoalContract.GoalEntry.TABLE_NAME,
@@ -132,7 +131,14 @@ public class GoalContentProvider extends ContentProvider {
                    );
                 Log.i("tag", String.valueOf(rowsDeleted));
                 break;
-
+            case SUB_GOALS:
+                rowsDeleted = db.delete(
+                        GoalContract.SubGoalEntry.TABLE_NAME_SUB,
+                        selection,
+                        selectionArgs
+                );
+                Log.i("tag", String.valueOf(rowsDeleted));
+                break;
             default:
                 throw new UnsupportedOperationException("Unknown URI:" + uri);
         }

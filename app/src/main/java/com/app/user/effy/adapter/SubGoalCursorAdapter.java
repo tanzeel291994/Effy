@@ -45,6 +45,11 @@ public interface OnReminderBtnPressed
 
     }
 
+    public String getIdByPosition(int position)
+    {
+        mCursor.moveToPosition(position);
+        return mCursor.getString(mCursor.getColumnIndex(GoalContract.SubGoalEntry._ID));
+    }
     @Override
     public void onBindViewHolder(SubGoalCursorAdapter.GoalViewHolder holder, int position) {
         int sub_goal_name_Index = mCursor.getColumnIndex(GoalContract.SubGoalEntry.COLUMN_SUB_GOAL_NAME);

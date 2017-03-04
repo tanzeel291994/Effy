@@ -54,7 +54,8 @@ public class QuoteActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        //MobileAds.initialize(getApplicationContext(),"ca-app-pub-7407657038959005~7713917972");
+
+
 
         mAdView = (AdView) findViewById(R.id.adView);
       //while launching
