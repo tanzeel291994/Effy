@@ -40,20 +40,7 @@
             android:textSize="16sp"
             android:textColor="@color/primary_text"/>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingEnd="@dimen/activity_vertical_margin"
-        android:paddingStart="@dimen/activity_vertical_margin">
 
-        <View
-            android:id="@+id/line_w"
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:background="@color/divider"
-            android:padding="4dip" />
-    </LinearLayout>
 <ListView
     android:layout_width="match_parent"
     android:id="@+id/listview_widget"

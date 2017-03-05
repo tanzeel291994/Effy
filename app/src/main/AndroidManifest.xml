@@ -24,7 +24,7 @@
         <provider
             android:name=".data.GoalContentProvider"
             android:authorities="com.app.user.effy"
-            android:exported="false" />
+            android:exported="true" />
 
         <activity android:name=".QuoteActivity" />
         <activity android:name=".SignInActivity">
