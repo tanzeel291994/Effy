@@ -27,4 +27,6 @@
     <string name="deviceId">DBF5F803633D4B33A80B6405AAE61643</string>
     <string name="get_quote">Get Quote</string>
     <string name="user_input_error">Please add a goal name</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

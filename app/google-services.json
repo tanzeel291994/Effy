@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "214951356420",
+    "project_id": "firebase-effy"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214951356420:android:3ccf05ef82554083",
+        "android_client_info": {
+          "package_name": "com.app.user.effy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214951356420-rauvpbcr7mbd7n1rkgmuql6md9jmtchd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.user.effy",
+            "certificate_hash": "bea3b74b918519936070c88a27c1e92ef1b005a8"
+          }
+        },
+        {
+          "client_id": "214951356420-i772qk6t1vfb247jvtksmg11084ff45p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYDjNwJpxiAsEHVUvMi6y6ZGnEzY_4R1A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
