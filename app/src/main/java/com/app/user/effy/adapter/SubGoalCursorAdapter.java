@@ -100,7 +100,7 @@ public class SubGoalCursorAdapter extends RecyclerView.Adapter<SubGoalCursorAdap
         TextView sub_goal_id;
         Button btn_reminder;
 
-         GoalViewHolder(View itemView) {
+        GoalViewHolder(View itemView) {
             super(itemView);
             sub_goal_name = (TextView) itemView.findViewById(R.id.sub_goal_name);
             sub_goal_id = (TextView) itemView.findViewById(R.id.sub_goal_id);

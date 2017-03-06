@@ -24,7 +24,7 @@ public class FragmentAddGoalDialog extends DialogFragment {
     }
 
     public interface CustomDialogInterface {
-         void addGoalClicked(String goal_name, Boolean imp, Boolean urg);
+        void addGoalClicked(String goal_name, Boolean imp, Boolean urg);
     }
 
     public static FragmentAddGoalDialog newInstance(String title) {
@@ -38,9 +38,9 @@ public class FragmentAddGoalDialog extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        int dialogWidth =  (MainActivity.displayMetrics.widthPixels);
+        int dialogWidth = (MainActivity.displayMetrics.widthPixels);
         int dialogHeight = (int) (MainActivity.displayMetrics.heightPixels * 0.45);
-        if(getDialog().getWindow()!=null)
+        if (getDialog().getWindow() != null)
             getDialog().getWindow().setLayout(dialogWidth, dialogHeight);
     }
 

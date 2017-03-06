@@ -101,7 +101,7 @@ public class GoalCursorAdapter extends RecyclerView.Adapter<GoalCursorAdapter.Go
         TextView goal_name;
         TextView goal_id;
 
-         GoalViewHolder(View itemView) {
+        GoalViewHolder(View itemView) {
             super(itemView);
             chk_imp = (CheckBox) itemView.findViewById(R.id.chk_imp1);
             chk_urg = (CheckBox) itemView.findViewById(R.id.chk_urg1);

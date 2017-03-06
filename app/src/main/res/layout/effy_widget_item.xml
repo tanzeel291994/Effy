@@ -22,14 +22,14 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:id="@+id/chk_imp_w"
-        android:contentDescription="@string/important"/>
+        android:contentDescription="@string/important" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:id="@+id/chk_urg_w"
-        android:contentDescription="@string/urgent"/>
+        android:contentDescription="@string/urgent" />
 
 
 </LinearLayout>

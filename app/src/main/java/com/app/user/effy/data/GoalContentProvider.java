@@ -81,13 +81,13 @@ public class GoalContentProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public String getType( @NonNull Uri uri) {
+    public String getType(@NonNull Uri uri) {
         return null;
     }
 
     @Nullable
     @Override
-    public Uri insert( @NonNull Uri uri, ContentValues contentValues) {
+    public Uri insert(@NonNull Uri uri, ContentValues contentValues) {
         final SQLiteDatabase db = mGoalDbHelper.getWritableDatabase();
         int match = sUriMatcher.match(uri);
         Uri returnUri;
@@ -116,7 +116,7 @@ public class GoalContentProvider extends ContentProvider {
     }
 
     @Override
-    public int delete( @NonNull Uri uri, String selection, String[] selectionArgs) {
+    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
         final SQLiteDatabase db = mGoalDbHelper.getWritableDatabase();
         int rowsDeleted;
 
@@ -152,7 +152,7 @@ public class GoalContentProvider extends ContentProvider {
     }
 
     @Override
-    public int update( @NonNull Uri uri, ContentValues contentValues, String s, String[] strings) {
+    public int update(@NonNull Uri uri, ContentValues contentValues, String s, String[] strings) {
         return 0;
     }
 }

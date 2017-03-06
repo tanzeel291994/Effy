@@ -24,7 +24,7 @@ public class FragmentAddSubDialog extends DialogFragment {
     }
 
     public interface CustomSubDialogInterface {
-         void addGoalClicked(String goal_name);
+        void addGoalClicked(String goal_name);
     }
 
     public static FragmentAddSubDialog newInstance(String title) {
@@ -38,10 +38,10 @@ public class FragmentAddSubDialog extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        int dialogWidth =  (MainActivity.displayMetrics.widthPixels);
+        int dialogWidth = (MainActivity.displayMetrics.widthPixels);
         int dialogHeight = (int) (MainActivity.displayMetrics.heightPixels * 0.35);
-        if(getDialog().getWindow()!=null)
-        getDialog().getWindow().setLayout(dialogWidth, dialogHeight);
+        if (getDialog().getWindow() != null)
+            getDialog().getWindow().setLayout(dialogWidth, dialogHeight);
     }
 
     @Override

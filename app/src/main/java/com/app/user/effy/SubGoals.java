@@ -54,7 +54,7 @@ public class SubGoals extends AppCompatActivity implements FragmentAddSubDialog.
         title = (TextView) findViewById(R.id.main_toolbar_title);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        if( getSupportActionBar()!=null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }

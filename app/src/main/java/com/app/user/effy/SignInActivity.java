@@ -79,13 +79,13 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            String personName=null;
-            if(acct!=null)
+            String personName = null;
+            if (acct != null)
                 personName = acct.getDisplayName();
 
-            if(personName==null) {
-               personName="buddy";
-           }
+            if (personName == null) {
+                personName = "buddy";
+            }
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("name", personName);
             startActivity(intent);

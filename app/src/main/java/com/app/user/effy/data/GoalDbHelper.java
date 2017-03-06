@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.app.user.effy.data.GoalContract.GoalEntry;
 import com.app.user.effy.data.GoalContract.SubGoalEntry;
 
- class GoalDbHelper extends SQLiteOpenHelper {
+class GoalDbHelper extends SQLiteOpenHelper {
     // The name of the database
     private static final String DATABASE_NAME = "goalsDb.db";
 

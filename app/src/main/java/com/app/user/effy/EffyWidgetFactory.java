@@ -12,12 +12,12 @@ import android.widget.RemoteViewsService;
 import com.app.user.effy.data.GoalContract;
 
 
- class EffyWidgetFactory implements RemoteViewsService.RemoteViewsFactory {
+class EffyWidgetFactory implements RemoteViewsService.RemoteViewsFactory {
     private Cursor mCursor;
     private Context mContext;
-     private int mWidgetId;
+    private int mWidgetId;
 
-     EffyWidgetFactory(Context applicationContext, Intent intent) {
+    EffyWidgetFactory(Context applicationContext, Intent intent) {
         mContext = applicationContext;
         mWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
