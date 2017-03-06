@@ -19,7 +19,6 @@ public class EffyWidgetFactory implements RemoteViewsService.RemoteViewsFactory 
     int mWidgetId;
     public EffyWidgetFactory(Context applicationContext, Intent intent)
     {
-       // Log.i("tag","311111");
         mContext = applicationContext;
         mWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -42,7 +41,6 @@ public class EffyWidgetFactory implements RemoteViewsService.RemoteViewsFactory 
                GoalContract.GoalEntry.CONTENT_URI,
                 projections,
                 null, null,null);
-
     }
 
     @Override
@@ -59,13 +57,19 @@ public class EffyWidgetFactory implements RemoteViewsService.RemoteViewsFactory 
 
     @Override
     public RemoteViews getViewAt(int position) {
-        Log.i("tag","2");
         RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.effy_widget_item);
         if (mCursor.moveToPosition(position)) {
-            Log.i("tag",mCursor.toString());
+
             rv.setTextViewText(R.id.goal_name_w, mCursor.getString(mCursor.getColumnIndex(GoalContract.GoalEntry.COLUMN_GOAL_NAME)));
-            rv.setBoolean(R.id.chk_imp_w,null, Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(GoalContract.GoalEntry.COLUMN_IMORTANT))));
-            rv.setBoolean(R.id.chk_urg_w,null, Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(GoalContract.GoalEntry.COLUMN_URGENT))));
+            if(Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(GoalContract.GoalEntry.COLUMN_IMORTANT))))
+            {
+                rv.setImageViewResource(R.id.chk_imp_w,R.drawable.ic_check_circle_white_24px);
+            }
+            if(Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(GoalContract.GoalEntry.COLUMN_URGENT))))
+            {
+                rv.setImageViewResource(R.id.chk_urg_w,R.drawable.ic_check_circle_white_24px);
+            }
+
         }
         // AppWidgetManager manager = AppWidgetManager.getInstance(mContext);
         // manager.updateAppWidget(mWidgetId, rv);
