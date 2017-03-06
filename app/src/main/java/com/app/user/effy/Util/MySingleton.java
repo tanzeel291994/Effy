@@ -1,4 +1,5 @@
 package com.app.user.effy.Util;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.LruCache;
@@ -8,8 +9,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
-public class MySingleton
-{
+public class MySingleton {
     private static MySingleton mInstance;
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
@@ -43,7 +43,7 @@ public class MySingleton
         return mInstance;
     }
 
-    public RequestQueue getRequestQueue() {
+    private RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
             // getApplicationContext() is key, it keeps you from leaking the
             // Activity or BroadcastReceiver if someone passes one in.
@@ -59,7 +59,6 @@ public class MySingleton
     public ImageLoader getImageLoader() {
         return mImageLoader;
     }
-
 
 
 }

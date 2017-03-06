@@ -1,71 +1,73 @@
 package com.app.user.effy;
 
 
-import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.app.user.effy.data.GoalContract;
-
-public class FragmentAddGoalDialog extends DialogFragment{
+public class FragmentAddGoalDialog extends DialogFragment {
 
     EditText editText_goal;
     Button btn_add;
     CheckBox chk_imp;
     CheckBox chk_urg;
     CustomDialogInterface customDI;
+
     public FragmentAddGoalDialog() {
 
     }
-    public interface CustomDialogInterface  {
-        public void addGoalClicked(String goal_name,Boolean imp,Boolean urg);
+
+    public interface CustomDialogInterface {
+         void addGoalClicked(String goal_name, Boolean imp, Boolean urg);
     }
-    public static FragmentAddGoalDialog newInstance(String title)
-    {
+
+    public static FragmentAddGoalDialog newInstance(String title) {
         FragmentAddGoalDialog fragment = new FragmentAddGoalDialog();
         Bundle args = new Bundle();
-        args.putString("title",title);
+        args.putString("title", title);
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     public void onResume() {
         super.onResume();
-        int dialogWidth = (int)(MainActivity.displayMetrics.widthPixels);
-        int dialogHeight = (int)(MainActivity.displayMetrics.heightPixels*0.45);
-        getDialog().getWindow().setLayout(dialogWidth, dialogHeight);
+        int dialogWidth =  (MainActivity.displayMetrics.widthPixels);
+        int dialogHeight = (int) (MainActivity.displayMetrics.heightPixels * 0.45);
+        if(getDialog().getWindow()!=null)
+            getDialog().getWindow().setLayout(dialogWidth, dialogHeight);
     }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
         return inflater.inflate(R.layout.fragment_add_goal_dialog, container, false);
     }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // Get field from view
         editText_goal = (EditText) view.findViewById(R.id.editText_goal);
-        chk_imp=(CheckBox)view.findViewById(R.id.chk_imp);
-        chk_urg=(CheckBox)view.findViewById(R.id.chk_urg);
-        btn_add=(Button)view.findViewById(R.id.add_goal);
+        chk_imp = (CheckBox) view.findViewById(R.id.chk_imp);
+        chk_urg = (CheckBox) view.findViewById(R.id.chk_urg);
+        btn_add = (Button) view.findViewById(R.id.add_goal);
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CustomDialogInterface customDialogInterface=(CustomDialogInterface)getActivity();
-                customDialogInterface.addGoalClicked(editText_goal.getText().toString(),chk_imp.isChecked(),chk_urg.isChecked());
+                CustomDialogInterface customDialogInterface = (CustomDialogInterface) getActivity();
+                customDialogInterface.addGoalClicked(editText_goal.getText().toString(), chk_imp.isChecked(), chk_urg.isChecked());
                 dismiss();
 
-            }});
+            }
+        });
         // Fetch arguments from bundle and set title
         String title = getArguments().getString("title");
         getDialog().setTitle(title);

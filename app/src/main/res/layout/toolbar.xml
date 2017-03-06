@@ -7,20 +7,20 @@
     android:minHeight="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
     local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    local:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+    local:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-<LinearLayout
-android:id="@+id/main_toolbar_layout"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/main_toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-<TextView
-    android:id="@+id/main_toolbar_title"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textColor="@color/textColorPrimary"
-    android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/main_toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="20sp" />
 
-</LinearLayout>
+    </LinearLayout>
 </android.support.v7.widget.Toolbar>

@@ -8,6 +8,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -23,8 +24,7 @@ public class GoalContentProvider extends ContentProvider {
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
-    private static UriMatcher buildUriMatcher()
-    {
+    private static UriMatcher buildUriMatcher() {
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(GoalContract.AUTHORITY, GoalContract.PATH_GOALS, GOALS);
         uriMatcher.addURI(GoalContract.AUTHORITY, GoalContract.PATH_SUB_GOALS, SUB_GOALS);
@@ -32,7 +32,9 @@ public class GoalContentProvider extends ContentProvider {
         uriMatcher.addURI(GoalContract.AUTHORITY, GoalContract.PATH_SUB_GOALS + "/#", SUB_GOALS_WITH_ID);
         return uriMatcher;
     }
+
     private GoalDbHelper mGoalDbHelper;
+
     @Override
     public boolean onCreate() {
         Context context = getContext();
@@ -43,13 +45,13 @@ public class GoalContentProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         final SQLiteDatabase db = mGoalDbHelper.getReadableDatabase();
         int match = sUriMatcher.match(uri);
         Cursor retCursor;
         switch (match) {
             case GOALS:
-                retCursor =  db.query(TABLE_NAME,
+                retCursor = db.query(TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -58,7 +60,7 @@ public class GoalContentProvider extends ContentProvider {
                         sortOrder);
                 break;
             case SUB_GOALS:
-                retCursor =  db.query(TABLE_NAME_SUB,
+                retCursor = db.query(TABLE_NAME_SUB,
                         projection,
                         selection,
                         selectionArgs,
@@ -79,20 +81,20 @@ public class GoalContentProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public String getType(Uri uri) {
+    public String getType( @NonNull Uri uri) {
         return null;
     }
 
     @Nullable
     @Override
-    public Uri insert(Uri uri, ContentValues contentValues) {
+    public Uri insert( @NonNull Uri uri, ContentValues contentValues) {
         final SQLiteDatabase db = mGoalDbHelper.getWritableDatabase();
         int match = sUriMatcher.match(uri);
         Uri returnUri;
         switch (match) {
             case GOALS:
                 long id = db.insert(TABLE_NAME, null, contentValues);
-                if ( id > 0 ) {
+                if (id > 0) {
                     returnUri = ContentUris.withAppendedId(GoalContract.GoalEntry.CONTENT_URI, id);
                 } else {
                     throw new android.database.SQLException("Failed to insert row into " + uri);
@@ -100,7 +102,7 @@ public class GoalContentProvider extends ContentProvider {
                 break;
             case SUB_GOALS:
                 long id_sub = db.insert(TABLE_NAME_SUB, null, contentValues);
-                if ( id_sub > 0 ) {
+                if (id_sub > 0) {
                     returnUri = ContentUris.withAppendedId(GoalContract.SubGoalEntry.CONTENT_URI, id_sub);
                 } else {
                     throw new android.database.SQLException("Failed to insert row into " + uri);
@@ -114,7 +116,7 @@ public class GoalContentProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
+    public int delete( @NonNull Uri uri, String selection, String[] selectionArgs) {
         final SQLiteDatabase db = mGoalDbHelper.getWritableDatabase();
         int rowsDeleted;
 
@@ -124,11 +126,11 @@ public class GoalContentProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case GOALS:
 
-                   rowsDeleted = db.delete(
-                           GoalContract.GoalEntry.TABLE_NAME,
-                           selection,
-                           selectionArgs
-                   );
+                rowsDeleted = db.delete(
+                        GoalContract.GoalEntry.TABLE_NAME,
+                        selection,
+                        selectionArgs
+                );
                 Log.i("tag", String.valueOf(rowsDeleted));
                 break;
             case SUB_GOALS:
@@ -150,7 +152,7 @@ public class GoalContentProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
+    public int update( @NonNull Uri uri, ContentValues contentValues, String s, String[] strings) {
         return 0;
     }
 }

@@ -2,8 +2,8 @@ package com.app.user.effy;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -20,27 +20,29 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class QuoteActivity extends AppCompatActivity {
 
-    TextView quote_body,title;
+    TextView quote_body, title;
     TextView quote_author;
     Context mcontext;
     Toolbar mToolbar;
     AdView mAdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mcontext=this;
+        mcontext = this;
         setContentView(R.layout.activity_quote);
-        quote_body=(TextView) findViewById(R.id.quote_body);
-        quote_author=(TextView) findViewById(R.id.quote_author);
-        title=(TextView)findViewById(R.id.main_toolbar_title);
+        quote_body = (TextView) findViewById(R.id.quote_body);
+        quote_author = (TextView) findViewById(R.id.quote_author);
+        title = (TextView) findViewById(R.id.main_toolbar_title);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        if(getSupportActionBar()!=null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
@@ -55,49 +57,45 @@ public class QuoteActivity extends AppCompatActivity {
         });
 
 
-
         mAdView = (AdView) findViewById(R.id.adView);
-      //while launching
+        //while launching
         /*
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
         */
 
-       AdRequest adRequest = new AdRequest.Builder()
-               .addTestDevice(getString(R.string.deviceId))
-              .build();
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(getString(R.string.deviceId))
+                .build();
         mAdView.loadAd(adRequest);
         new QuoteAsyncTaskLoader(mcontext).loadInBackground();
 
 
     }
-    public  class QuoteAsyncTaskLoader extends AsyncTaskLoader
-    {
 
-         QuoteAsyncTaskLoader(Context context) {
+    public class QuoteAsyncTaskLoader extends AsyncTaskLoader {
+
+        QuoteAsyncTaskLoader(Context context) {
             super(context);
         }
-
 
 
         @Override
         public Void loadInBackground() {
 
             String url = "http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json";
-            JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url,null,
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
 
                             Log.i("TAG", response.toString());
-                            try
-                            {
+                            try {
                                 quote_body.setText(response.get("quoteText").toString());
                                 quote_author.setText(response.get("quoteAuthor").toString());
 
-                            } catch (Exception e)
-                            {
-                                Log.i("tag",e.toString());
+                            } catch (Exception e) {
+                                Log.i("tag", e.toString());
                             }
 
                         }
@@ -122,10 +120,11 @@ public class QuoteActivity extends AppCompatActivity {
 
             };
             MySingleton.getInstance(mcontext).addToRequestQueue(jsObjRequest);
-        return  null;
+            return null;
         }
 
     }
+
     @Override
     public void onPause() {
         if (mAdView != null) {
@@ -150,8 +149,7 @@ public class QuoteActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public void getAnotherQuote(View view)
-    {
+    public void getAnotherQuote(View view) {
         new QuoteAsyncTaskLoader(mcontext).loadInBackground();
     }
 }

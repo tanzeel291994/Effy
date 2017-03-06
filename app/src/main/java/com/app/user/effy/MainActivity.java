@@ -1,18 +1,18 @@
 package com.app.user.effy;
 
 import android.content.ContentValues;
-import android.database.Cursor;
-import android.graphics.Typeface;
-import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,7 +22,6 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,8 +32,8 @@ import com.app.user.effy.data.GoalContract.GoalEntry;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements FragmentAddGoalDialog.CustomDialogInterface
-        ,LoaderManager.LoaderCallbacks<Cursor> ,GoalCursorAdapter.OnItemClickListener,
-        SwipeRefreshLayout.OnRefreshListener{
+        , LoaderManager.LoaderCallbacks<Cursor>, GoalCursorAdapter.OnItemClickListener,
+        SwipeRefreshLayout.OnRefreshListener {
 
     public static DisplayMetrics displayMetrics;
     Context context;
@@ -50,27 +49,27 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        title_toolbar=(TextView)findViewById(R.id.main_toolbar_title);
-        String name=getIntent().getStringExtra("name");
-        Toast.makeText(MainActivity.this,getString(R.string.hey)+name+getString(R.string.greeting), Toast.LENGTH_LONG).show();
-        context=this;
-        int GOAL_LOADER_ID =0 ;
-        goals_list=new ArrayList<>();
-        goalCursorAdapter = new GoalCursorAdapter(this,this);
+        title_toolbar = (TextView) findViewById(R.id.main_toolbar_title);
+        String name = getIntent().getStringExtra("name");
+        Toast.makeText(MainActivity.this, getString(R.string.hey) + name + getString(R.string.greeting), Toast.LENGTH_LONG).show();
+        context = this;
+        int GOAL_LOADER_ID = 0;
+        goals_list = new ArrayList<>();
+        goalCursorAdapter = new GoalCursorAdapter(this, this);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         title_toolbar.setText(R.string.effy);
         title_toolbar.setTextSize(Float.parseFloat("32"));
-        Typeface custom_font = Typeface.createFromAsset(getAssets(),"font/BEBAS___.ttf");
+        Typeface custom_font = Typeface.createFromAsset(getAssets(), "font/BEBAS___.ttf");
         title_toolbar.setTypeface(custom_font);
         //title_toolbar.setGravity(Gravity.CENTER);
 //        LinearLayout r = (LinearLayout) ((ViewGroup) title_toolbar.getParent()).getParent();
-  //      r.setGravity(Gravity.CENTER);
+        //      r.setGravity(Gravity.CENTER);
         setSupportActionBar(mToolbar);
-        if(getSupportActionBar()!=null)
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        swipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setRefreshing(true);
         onRefresh();
@@ -81,15 +80,15 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
         recyclerview.setItemAnimator(new DefaultItemAnimator());
         recyclerview.setAdapter(goalCursorAdapter);
 
-        displayMetrics =getResources().getDisplayMetrics();
+        displayMetrics = getResources().getDisplayMetrics();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             //   Toast.makeText(MainActivity.this, "fab", Toast.LENGTH_SHORT).show();
+                //   Toast.makeText(MainActivity.this, "fab", Toast.LENGTH_SHORT).show();
                 FragmentManager fm = getSupportFragmentManager();
                 addGoalDialogFragment = FragmentAddGoalDialog.newInstance("Add Goal");
-                addGoalDialogFragment.show(fm,"fragment_add_goal");
+                addGoalDialogFragment.show(fm, "fragment_add_goal");
 
             }
         });
@@ -103,8 +102,8 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 String goal_id = goalCursorAdapter.getIdByPosition(viewHolder.getAdapterPosition());
-               // Log.i("tag",GoalEntry.makeUriForStock(goal_id).toString());
-                getContentResolver().delete(GoalEntry.CONTENT_URI,GoalEntry._ID+" = "+goal_id,null);
+                // Log.i("tag",GoalEntry.makeUriForStock(goal_id).toString());
+                getContentResolver().delete(GoalEntry.CONTENT_URI, GoalEntry._ID + " = " + goal_id, null);
             }
         }).attachToRecyclerView(recyclerview);
 
@@ -127,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_get_quote) {
-            Intent intent=new Intent(this,QuoteActivity.class);
+            Intent intent = new Intent(this, QuoteActivity.class);
             startActivity(intent);
             //getContentResolver().delete(GoalEntry.makeUriForStock("1"),GoalEntry._ID,null);
             return true;
@@ -137,24 +136,21 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
     }
 
     @Override
-    public void addGoalClicked(String goal_name,Boolean imp,Boolean urg) {
+    public void addGoalClicked(String goal_name, Boolean imp, Boolean urg) {
 
-        if(goal_name.isEmpty())
-        {
+        if (goal_name.isEmpty()) {
             Toast.makeText(getBaseContext(), R.string.user_input_error, Toast.LENGTH_LONG).show();
             return;
         }
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(GoalEntry.COLUMN_GOAL_NAME,goal_name);
+        contentValues.put(GoalEntry.COLUMN_GOAL_NAME, goal_name);
         contentValues.put(GoalEntry.COLUMN_IMORTANT, String.valueOf(imp));
-        contentValues.put(GoalEntry.COLUMN_URGENT,String.valueOf(urg));
+        contentValues.put(GoalEntry.COLUMN_URGENT, String.valueOf(urg));
 
         try {
-           getContentResolver().insert(GoalEntry.CONTENT_URI, contentValues);
-        }
-        catch (Exception e)
-        {
+            getContentResolver().insert(GoalEntry.CONTENT_URI, contentValues);
+        } catch (Exception e) {
             Toast.makeText(getBaseContext(), R.string.error_goal, Toast.LENGTH_LONG).show();
         }
 
@@ -162,11 +158,11 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String [] projection={GoalEntry._ID,GoalEntry.COLUMN_GOAL_NAME,GoalEntry.COLUMN_IMORTANT,GoalEntry.COLUMN_URGENT};
+        String[] projection = {GoalEntry._ID, GoalEntry.COLUMN_GOAL_NAME, GoalEntry.COLUMN_IMORTANT, GoalEntry.COLUMN_URGENT};
         return new CursorLoader(this,
                 GoalEntry.CONTENT_URI,
                 projection,
-                null, null,null);
+                null, null, null);
     }
 
     @Override
@@ -183,11 +179,11 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
     }
 
     @Override
-    public void onClick(String goal_name,int goal_id) {
+    public void onClick(String goal_name, int goal_id) {
         //Toast.makeText(MainActivity.this,String.valueOf(goal_id), Toast.LENGTH_SHORT).show();
-        Intent intent=new Intent(this,SubGoals.class);
-        intent.putExtra("goal_id",goal_id);
-        intent.putExtra("goal_name",goal_name);
+        Intent intent = new Intent(this, SubGoals.class);
+        intent.putExtra("goal_id", goal_id);
+        intent.putExtra("goal_name", goal_name);
         startActivity(intent);
     }
 

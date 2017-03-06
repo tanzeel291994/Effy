@@ -1,17 +1,17 @@
 package com.app.user.effy.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
-import android.provider.CalendarContract;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.app.user.effy.R;
 import com.app.user.effy.data.GoalContract;
+
 import java.util.ArrayList;
 
 
@@ -19,15 +19,16 @@ public class SubGoalCursorAdapter extends RecyclerView.Adapter<SubGoalCursorAdap
     private Cursor mCursor;
     private Context mContext;
     ArrayList<GoalModel> goal_list;
-  /*  public interface OnItemClickListener {
-        void onClick(String goal_name,int goal_id);
-    }*/
-public interface OnReminderBtnPressed
-  {
-      void onClick(String sub_goal_name);
-  }
+
+    /*  public interface OnItemClickListener {
+          void onClick(String goal_name,int goal_id);
+      }*/
+    public interface OnReminderBtnPressed {
+        void onClick(String sub_goal_name);
+    }
+
     private final OnReminderBtnPressed onReminderBtnPressed;
-   // private final OnItemClickListener listener;
+    // private final OnItemClickListener listener;
 
     @Override
     public SubGoalCursorAdapter.GoalViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -37,19 +38,19 @@ public interface OnReminderBtnPressed
     }
 
 
-    public SubGoalCursorAdapter(Context mContext,OnReminderBtnPressed onReminderBtnPressed) {
+    public SubGoalCursorAdapter(Context mContext, OnReminderBtnPressed onReminderBtnPressed) {
         this.mContext = mContext;
-        this.onReminderBtnPressed=onReminderBtnPressed;
-     //   this.listener = listener;
+        this.onReminderBtnPressed = onReminderBtnPressed;
+        //   this.listener = listener;
         //goal_list=new ArrayList<GoalModel>();
 
     }
 
-    public String getIdByPosition(int position)
-    {
+    public String getIdByPosition(int position) {
         mCursor.moveToPosition(position);
         return mCursor.getString(mCursor.getColumnIndex(GoalContract.SubGoalEntry._ID));
     }
+
     @Override
     public void onBindViewHolder(SubGoalCursorAdapter.GoalViewHolder holder, int position) {
         int sub_goal_name_Index = mCursor.getColumnIndex(GoalContract.SubGoalEntry.COLUMN_SUB_GOAL_NAME);
@@ -57,13 +58,13 @@ public interface OnReminderBtnPressed
 
 
         mCursor.moveToPosition(position);
-        final String sub_goal_name=mCursor.getString(sub_goal_name_Index);
+        final String sub_goal_name = mCursor.getString(sub_goal_name_Index);
         holder.sub_goal_name.setText(sub_goal_name);
-        holder.sub_goal_id.setText(String.valueOf(position+1));
+        holder.sub_goal_id.setText(String.valueOf(position + 1));
         holder.btn_reminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              onReminderBtnPressed.onClick(sub_goal_name);
+                onReminderBtnPressed.onClick(sub_goal_name);
             }
         });
 
@@ -92,18 +93,18 @@ public interface OnReminderBtnPressed
         return temp;
     }
 
-    class GoalViewHolder extends RecyclerView.ViewHolder  {
+    class GoalViewHolder extends RecyclerView.ViewHolder {
 
 
-         TextView sub_goal_name;
-         TextView sub_goal_id;
-         Button btn_reminder;
+        TextView sub_goal_name;
+        TextView sub_goal_id;
+        Button btn_reminder;
 
-        public GoalViewHolder(View itemView) {
+         GoalViewHolder(View itemView) {
             super(itemView);
-            sub_goal_name=(TextView) itemView.findViewById(R.id.sub_goal_name);
-            sub_goal_id=(TextView) itemView.findViewById(R.id.sub_goal_id);
-            btn_reminder=(Button) itemView.findViewById(R.id.reminder);
+            sub_goal_name = (TextView) itemView.findViewById(R.id.sub_goal_name);
+            sub_goal_id = (TextView) itemView.findViewById(R.id.sub_goal_id);
+            btn_reminder = (Button) itemView.findViewById(R.id.reminder);
             //  itemView.setOnClickListener(this);
 
         }

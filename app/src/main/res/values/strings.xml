@@ -29,4 +29,6 @@
     <string name="user_input_error">Please add a goal name</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="slogan">Eff up your effy quotient,being effective and efficient with Effy app</string>
+    <string name="login_error">Could not login</string>
 </resources>

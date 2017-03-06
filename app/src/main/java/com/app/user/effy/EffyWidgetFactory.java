@@ -5,7 +5,6 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.constraint.solver.Goal;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -13,12 +12,12 @@ import android.widget.RemoteViewsService;
 import com.app.user.effy.data.GoalContract;
 
 
-public class EffyWidgetFactory implements RemoteViewsService.RemoteViewsFactory {
+ class EffyWidgetFactory implements RemoteViewsService.RemoteViewsFactory {
     private Cursor mCursor;
     private Context mContext;
-    int mWidgetId;
-    public EffyWidgetFactory(Context applicationContext, Intent intent)
-    {
+     private int mWidgetId;
+
+     EffyWidgetFactory(Context applicationContext, Intent intent) {
         mContext = applicationContext;
         mWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -31,16 +30,16 @@ public class EffyWidgetFactory implements RemoteViewsService.RemoteViewsFactory 
 
     @Override
     public void onDataSetChanged() {
-        Log.i("tag","411111");
+        Log.i("tag", "411111");
         if (mCursor != null) {
             mCursor.close();
         }
-        String[] projections={GoalContract.GoalEntry.COLUMN_GOAL_NAME,GoalContract.GoalEntry.COLUMN_URGENT,
+        String[] projections = {GoalContract.GoalEntry.COLUMN_GOAL_NAME, GoalContract.GoalEntry.COLUMN_URGENT,
                 GoalContract.GoalEntry.COLUMN_IMORTANT};
         mCursor = mContext.getContentResolver().query(
-               GoalContract.GoalEntry.CONTENT_URI,
+                GoalContract.GoalEntry.CONTENT_URI,
                 projections,
-                null, null,null);
+                null, null, null);
     }
 
     @Override
@@ -61,13 +60,11 @@ public class EffyWidgetFactory implements RemoteViewsService.RemoteViewsFactory 
         if (mCursor.moveToPosition(position)) {
 
             rv.setTextViewText(R.id.goal_name_w, mCursor.getString(mCursor.getColumnIndex(GoalContract.GoalEntry.COLUMN_GOAL_NAME)));
-            if(Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(GoalContract.GoalEntry.COLUMN_IMORTANT))))
-            {
-                rv.setImageViewResource(R.id.chk_imp_w,R.drawable.ic_check_circle_white_24px);
+            if (Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(GoalContract.GoalEntry.COLUMN_IMORTANT)))) {
+                rv.setImageViewResource(R.id.chk_imp_w, R.drawable.ic_check_circle_white_24px);
             }
-            if(Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(GoalContract.GoalEntry.COLUMN_URGENT))))
-            {
-                rv.setImageViewResource(R.id.chk_urg_w,R.drawable.ic_check_circle_white_24px);
+            if (Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(GoalContract.GoalEntry.COLUMN_URGENT)))) {
+                rv.setImageViewResource(R.id.chk_urg_w, R.drawable.ic_check_circle_white_24px);
             }
 
         }

@@ -3,23 +3,18 @@ package com.app.user.effy.adapter;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
-public class GoalModel implements Parcelable
-{
-    public GoalModel(String goal_name,String imp,String urg,Integer goal_id)
-    {
-        this.goal_name=goal_name;
-        this.urg=urg;
-        this.imp=imp;
-        this.goal_id=goal_id;
+public class GoalModel implements Parcelable {
+    public GoalModel(String goal_name, String imp, String urg, Integer goal_id) {
+        this.goal_name = goal_name;
+        this.urg = urg;
+        this.imp = imp;
+        this.goal_id = goal_id;
     }
 
     public String goal_name;
-    public String imp;
-    public String urg;
-    public Integer goal_id;
-
+    private String imp;
+    private String urg;
+    private Integer goal_id;
 
 
     @Override
@@ -34,10 +29,11 @@ public class GoalModel implements Parcelable
         out.writeString(urg);
 
     }
+
     private GoalModel(Parcel in) {
         imp = in.readString();
         goal_name = in.readString();
-       urg = in.readString();
+        urg = in.readString();
 
     }
 

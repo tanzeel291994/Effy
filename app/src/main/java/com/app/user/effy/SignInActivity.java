@@ -3,9 +3,9 @@ package com.app.user.effy;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,9 +21,8 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 
-public class SignInActivity extends AppCompatActivity implements  View.OnClickListener,
+public class SignInActivity extends AppCompatActivity implements View.OnClickListener,
         GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -49,8 +48,8 @@ public class SignInActivity extends AppCompatActivity implements  View.OnClickLi
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
-        Typeface custom_font = Typeface.createFromAsset(getAssets(),"font/BEBAS___.ttf");
-        mainTxt=(TextView)findViewById(R.id.main) ;
+        Typeface custom_font = Typeface.createFromAsset(getAssets(), "font/BEBAS___.ttf");
+        mainTxt = (TextView) findViewById(R.id.main);
         mainTxt.setTypeface(custom_font);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
@@ -59,7 +58,7 @@ public class SignInActivity extends AppCompatActivity implements  View.OnClickLi
 
         // Customizing G+ button
         btnSignIn.setSize(SignInButton.SIZE_STANDARD);
-        btnSignIn.setScopes(gso.getScopeArray());
+        //btnSignIn.setScopes(gso.getScopeArray());
     }
 
 
@@ -70,8 +69,8 @@ public class SignInActivity extends AppCompatActivity implements  View.OnClickLi
 
 
     private void skipBtn() {
-        Intent intent=new Intent(this,MainActivity.class);
-        intent.putExtra("name","buddy");
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("name", "buddy");
         startActivity(intent);
     }
 
@@ -80,23 +79,20 @@ public class SignInActivity extends AppCompatActivity implements  View.OnClickLi
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
+            String personName=null;
+            if(acct!=null)
+                personName = acct.getDisplayName();
 
-            Log.e(TAG, "display name: " + acct.getDisplayName());
-
-            String personName = acct.getDisplayName();
-            String personPhotoUrl = acct.getPhotoUrl().toString();
-            String email = acct.getEmail();
-
-            Log.e(TAG, "Name: " + personName + ", email: " + email
-                    + ", Image: " + personPhotoUrl);
-                Intent intent=new Intent(this,MainActivity.class);
-            intent.putExtra("name",personName);
+            if(personName==null) {
+               personName="buddy";
+           }
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("name", personName);
             startActivity(intent);
 
-        } else
-        {
+        } else {
 
-            //Toast.makeText(SignInActivity.this, "Could not login", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignInActivity.this, getString(R.string.login_error), Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -111,7 +107,7 @@ public class SignInActivity extends AppCompatActivity implements  View.OnClickLi
                 break;
 
             case R.id.skipBtn:
-                    skipBtn();
+                skipBtn();
                 break;
 
         }
@@ -146,7 +142,7 @@ public class SignInActivity extends AppCompatActivity implements  View.OnClickLi
             showProgressDialog();
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override
-                public void onResult(GoogleSignInResult googleSignInResult) {
+                public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
                     hideProgressDialog();
                     handleSignInResult(googleSignInResult);
                 }
