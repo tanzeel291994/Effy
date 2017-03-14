@@ -51,8 +51,9 @@ public class SubGoals extends AppCompatActivity implements FragmentAddSubDialog.
         goal_id = getIntent().getIntExtra("goal_id", 1);
         goal_name = getIntent().getStringExtra("goal_name");
         subGoalCursorAdapter = new SubGoalCursorAdapter(this, this);
-        title = (TextView) findViewById(R.id.main_toolbar_title);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        title = (TextView) findViewById(R.id.main_title);
+        title.setText(goal_name);
+        /*mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -66,7 +67,7 @@ public class SubGoals extends AppCompatActivity implements FragmentAddSubDialog.
                 //Toast.makeText(SubGoals.this, "on back pressed", Toast.LENGTH_SHORT).show();
                 onBackPressed();
             }
-        });
+        });*/
 
 
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview1);
@@ -139,7 +140,7 @@ public class SubGoals extends AppCompatActivity implements FragmentAddSubDialog.
             Toast.makeText(getBaseContext(), e.toString(), Toast.LENGTH_LONG).show();
         }
         if (uri != null) {
-            Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -177,6 +178,6 @@ public class SubGoals extends AppCompatActivity implements FragmentAddSubDialog.
 
     @Override
     public void onRefresh() {
-
+        swipeRefreshLayout.setRefreshing(false);
     }
 }

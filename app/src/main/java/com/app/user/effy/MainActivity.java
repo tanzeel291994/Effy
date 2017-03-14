@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
@@ -22,9 +24,11 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.user.effy.Util.*;
 import com.app.user.effy.adapter.GoalCursorAdapter;
 import com.app.user.effy.adapter.GoalModel;
 import com.app.user.effy.data.GoalContract.GoalEntry;
@@ -40,16 +44,20 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
     RecyclerView recyclerview;
     GoalCursorAdapter goalCursorAdapter;
     FragmentAddGoalDialog addGoalDialogFragment;
+    Cursor mCursor;
     ArrayList<GoalModel> goals_list;
     Toolbar mToolbar;
     TextView title_toolbar;
     private SwipeRefreshLayout swipeRefreshLayout;
+    Button btColorScheme;
+    private BottomSheetBehavior mBottomSheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         title_toolbar = (TextView) findViewById(R.id.main_toolbar_title);
+        btColorScheme=(Button) findViewById(R.id.colorScheme);
         String name = getIntent().getStringExtra("name");
         Toast.makeText(MainActivity.this, getString(R.string.hey) + name + getString(R.string.greeting), Toast.LENGTH_LONG).show();
         context = this;
@@ -79,20 +87,44 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
         recyclerview.setLayoutManager(mLayoutManager);
         recyclerview.setItemAnimator(new DefaultItemAnimator());
         recyclerview.setAdapter(goalCursorAdapter);
+        View bottomSheet = findViewById( R.id.bottom_sheet );
+        mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
 
         displayMetrics = getResources().getDisplayMetrics();
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //   Toast.makeText(MainActivity.this, "fab", Toast.LENGTH_SHORT).show();
+
                 FragmentManager fm = getSupportFragmentManager();
                 addGoalDialogFragment = FragmentAddGoalDialog.newInstance("Add Goal");
                 addGoalDialogFragment.show(fm, "fragment_add_goal");
 
             }
         });
+        recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener()
+        {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                if (dy>0 && fab.isShown())
+                {
+                    fab.hide();
+                }
 
+            }
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+            {
+                if (newState == RecyclerView.SCROLL_STATE_SETTLING)
+                {
+                    fab.show();
+                }
+
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -106,6 +138,23 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
                 getContentResolver().delete(GoalEntry.CONTENT_URI, GoalEntry._ID + " = " + goal_id, null);
             }
         }).attachToRecyclerView(recyclerview);
+
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mBottomSheetBehavior.setPeekHeight(0);
+        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(View bottomSheet, int newState) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+
+                    btColorScheme.setVisibility(View.VISIBLE);
+                    mBottomSheetBehavior.setPeekHeight(0);
+                }
+            }
+
+            @Override
+            public void onSlide(View bottomSheet, float slideOffset) {
+            }
+        });
 
         getSupportLoaderManager().initLoader(GOAL_LOADER_ID, null, this);
     }
@@ -168,13 +217,13 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         swipeRefreshLayout.setRefreshing(false);
+        mCursor=data;
         goalCursorAdapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        swipeRefreshLayout.setRefreshing(false);
-
+       swipeRefreshLayout.setRefreshing(false);
         goalCursorAdapter.swapCursor(null);
     }
 
@@ -187,8 +236,15 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
         startActivity(intent);
     }
 
+    public void colorScheme(View view)
+    {
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        btColorScheme.setVisibility(View.INVISIBLE);
+    }
+
     @Override
     public void onRefresh() {
-
+        swipeRefreshLayout.setRefreshing(false);
+        //goalCursorAdapter.swapCursor(mCursor);
     }
 }

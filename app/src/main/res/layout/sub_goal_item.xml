@@ -3,35 +3,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingTop="8dp"
-    android:paddingStart="@dimen/activity_vertical_margin"
-    android:paddingEnd="@dimen/activity_vertical_margin">
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="1"
-        android:layout_gravity="fill"
-        android:layout_weight="0.5"
-        android:id="@+id/sub_goal_id"
-        android:textSize="18sp" />
+        android:orientation="horizontal"
+        android:paddingTop="8dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="@dimen/activity_vertical_margin">
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.15">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="1dip"
+                    android:background="@color/primary"
+                    android:padding="2dip" />
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="1dip"
+                    android:background="@color/primary"
+                    android:layout_marginTop="8dp"
+                    android:padding="2dip" />
+            </LinearLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:src="@drawable/ic_fiber_manual_record_black_18px"
+                android:contentDescription="@string/punch_hole" />
+
+
+        </FrameLayout>
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         tools:text="@string/sub_tasks"
         android:layout_gravity="fill"
-        android:layout_weight="4"
+        android:layout_weight="2"
         android:id="@+id/sub_goal_name"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:paddingBottom="8dp"/>
 
-    <Button
+    <ImageButton
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         tools:text="Reminder"
-        android:text="@string/set"
+        android:paddingBottom="8dp"
+       android:src="@drawable/ic_alarm_black_36px"
         android:id="@+id/reminder"
-        android:layout_weight="3" />
+        android:background="@null"
+        android:contentDescription="@string/reminder"
+        android:layout_weight="1" />
 
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="#ff8396"
+        android:padding="4dip" />
 </LinearLayout>

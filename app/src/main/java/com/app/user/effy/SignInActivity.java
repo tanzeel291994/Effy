@@ -41,7 +41,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
+         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         skipBtn = (Button) findViewById(R.id.skipBtn);
         btnSignIn.setOnClickListener(this);
         skipBtn.setOnClickListener(this);

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.app.user.effy.R;
@@ -59,8 +60,8 @@ public class SubGoalCursorAdapter extends RecyclerView.Adapter<SubGoalCursorAdap
 
         mCursor.moveToPosition(position);
         final String sub_goal_name = mCursor.getString(sub_goal_name_Index);
-        holder.sub_goal_name.setText(sub_goal_name);
-        holder.sub_goal_id.setText(String.valueOf(position + 1));
+        holder.sub_goal_name.setText(String.valueOf(position + 1)+") "+sub_goal_name);
+       // holder.sub_goal_id.setText(String.valueOf(position + 1));
         holder.btn_reminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,13 +99,13 @@ public class SubGoalCursorAdapter extends RecyclerView.Adapter<SubGoalCursorAdap
 
         TextView sub_goal_name;
         TextView sub_goal_id;
-        Button btn_reminder;
+        ImageButton btn_reminder;
 
         GoalViewHolder(View itemView) {
             super(itemView);
             sub_goal_name = (TextView) itemView.findViewById(R.id.sub_goal_name);
-            sub_goal_id = (TextView) itemView.findViewById(R.id.sub_goal_id);
-            btn_reminder = (Button) itemView.findViewById(R.id.reminder);
+           // sub_goal_id = (TextView) itemView.findViewById(R.id.sub_goal_id);
+            btn_reminder = (ImageButton) itemView.findViewById(R.id.reminder);
             //  itemView.setOnClickListener(this);
 
         }
