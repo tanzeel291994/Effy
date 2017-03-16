@@ -38,6 +38,11 @@ import com.app.user.effy.Util.*;
 import com.app.user.effy.adapter.GoalCursorAdapter;
 import com.app.user.effy.adapter.GoalModel;
 import com.app.user.effy.data.GoalContract.GoalEntry;
+import com.app.user.effy.service.MyTaskService;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.gcm.GcmNetworkManager;
+import com.google.android.gms.gcm.PeriodicTask;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
@@ -58,7 +63,11 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
     private SwipeRefreshLayout swipeRefreshLayout;
     Button btColorScheme;
     private BottomSheetBehavior mBottomSheetBehavior;
-    private BroadcastReceiver mRegistrationBroadcastReceiver;
+    public static final String TASK_TAG_WIFI = "wifi_task";
+    private BroadcastReceiver mReceiver;
+    private GcmNetworkManager mGcmNetworkManager;
+    private static final String TAG = "MainActivity";
+    private static final int RC_PLAY_SERVICES = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,21 +169,90 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
             }
         });
 
-        ///
+        // [START get_gcm_network_manager]
+        mGcmNetworkManager = GcmNetworkManager.getInstance(this);
+        // [END get_gcm_network_manager]
 
+       //startPeriodicTask();
+        //stopPeriodicTask();
+        mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(MyTaskService.ACTION_DONE)) {
+                    String tag = intent.getStringExtra(MyTaskService.EXTRA_TAG);
+                    int result = intent.getIntExtra(MyTaskService.EXTRA_RESULT, -1);
 
+                    String msg = String.format("DONE: %s (%d)", tag, result);
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
 
+        // Check that Google Play Services is available, since we need it to use GcmNetworkManager
+        // but the API does not use GoogleApiClient, which would normally perform the check
+        // automatically.
+        checkPlayServicesAvailable();
 
       getSupportLoaderManager().initLoader(GOAL_LOADER_ID, null, this);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(MyTaskService.ACTION_DONE);
+
+        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
+        manager.registerReceiver(mReceiver, filter);
+    }
 
 
+    @Override
+    public void onStop() {
+        super.onStop();
 
+        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
+        manager.unregisterReceiver(mReceiver);
 
+        // For the purposes of this sample, cancel all tasks when the app is stopped.
+        //mGcmNetworkManager.cancelAllTasks(MyTaskService.class);
+    }
+    public void startPeriodicTask() {
+        Log.d(TAG, "startPeriodicTask");
 
+        // [START start_periodic_task]
+        PeriodicTask task = new PeriodicTask.Builder()
+                .setService(MyTaskService.class)
+                .setTag(TASK_TAG_WIFI)
+                .setPeriod(30L)
+                .build();
 
+        mGcmNetworkManager.schedule(task);
+        // [END start_periodic_task]
+    }
 
+    public void stopPeriodicTask() {
+        Log.d(TAG, "stopPeriodicTask");
+
+        // [START stop_periodic_task]
+        mGcmNetworkManager.cancelTask(TASK_TAG_WIFI, MyTaskService.class);
+        // [END stop_per
+    }
+    private void checkPlayServicesAvailable() {
+        GoogleApiAvailability availability = GoogleApiAvailability.getInstance();
+        int resultCode = availability.isGooglePlayServicesAvailable(this);
+
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (availability.isUserResolvableError(resultCode)) {
+                // Show dialog to resolve the error.
+                availability.getErrorDialog(this, resultCode, RC_PLAY_SERVICES).show();
+            } else {
+                // Unresolvable error
+                Toast.makeText(this, "Google Play Services error", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
 
 

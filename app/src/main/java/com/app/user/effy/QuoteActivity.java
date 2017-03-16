@@ -68,7 +68,16 @@ public class QuoteActivity extends AppCompatActivity {
                 .addTestDevice(getString(R.string.deviceId))
                 .build();
         mAdView.loadAd(adRequest);
-        new QuoteAsyncTaskLoader(mcontext).loadInBackground();
+
+        if(getIntent()!=null)
+        {
+            Log.i("tag",getIntent().getStringExtra(("quoteText")));
+            quote_body.setText(getIntent().getStringExtra(("quoteText")));
+            quote_author.setText(getIntent().getStringExtra(("quoteAuthor")));
+
+        }
+        else
+            new QuoteAsyncTaskLoader(mcontext).loadInBackground();
 
 
     }
