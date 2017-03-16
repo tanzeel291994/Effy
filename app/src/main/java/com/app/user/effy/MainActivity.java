@@ -1,8 +1,11 @@
 package com.app.user.effy;
 
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -13,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -21,6 +25,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,10 +33,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.user.effy.App.Config;
 import com.app.user.effy.Util.*;
 import com.app.user.effy.adapter.GoalCursorAdapter;
 import com.app.user.effy.adapter.GoalModel;
 import com.app.user.effy.data.GoalContract.GoalEntry;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 
@@ -51,13 +58,14 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
     private SwipeRefreshLayout swipeRefreshLayout;
     Button btColorScheme;
     private BottomSheetBehavior mBottomSheetBehavior;
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         title_toolbar = (TextView) findViewById(R.id.main_toolbar_title);
-        btColorScheme=(Button) findViewById(R.id.colorScheme);
+        btColorScheme = (Button) findViewById(R.id.colorScheme);
         String name = getIntent().getStringExtra("name");
         Toast.makeText(MainActivity.this, getString(R.string.hey) + name + getString(R.string.greeting), Toast.LENGTH_LONG).show();
         context = this;
@@ -87,11 +95,11 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
         recyclerview.setLayoutManager(mLayoutManager);
         recyclerview.setItemAnimator(new DefaultItemAnimator());
         recyclerview.setAdapter(goalCursorAdapter);
-        View bottomSheet = findViewById( R.id.bottom_sheet );
+        View bottomSheet = findViewById(R.id.bottom_sheet);
         mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
 
         displayMetrics = getResources().getDisplayMetrics();
-         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,22 +111,18 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
 
             }
         });
-        recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener()
-        {
+        recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
-                if (dy>0 && fab.isShown())
-                {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 && fab.isShown()) {
                     fab.hide();
                 }
 
             }
+
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState)
-            {
-                if (newState == RecyclerView.SCROLL_STATE_SETTLING)
-                {
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_SETTLING) {
                     fab.show();
                 }
 
@@ -156,8 +160,23 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
             }
         });
 
-        getSupportLoaderManager().initLoader(GOAL_LOADER_ID, null, this);
+        ///
+
+
+
+
+      getSupportLoaderManager().initLoader(GOAL_LOADER_ID, null, this);
     }
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

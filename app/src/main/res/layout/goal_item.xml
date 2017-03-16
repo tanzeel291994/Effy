@@ -54,7 +54,7 @@
         android:layout_gravity="fill"
         tools:text="Finish exam"
         android:id="@+id/goal_name"
-        android:layout_weight="1.5"
+        android:layout_weight="1.65"
         android:textSize="20sp" />
 
     <RelativeLayout
