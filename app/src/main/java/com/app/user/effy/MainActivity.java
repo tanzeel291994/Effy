@@ -65,9 +65,10 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
     private BottomSheetBehavior mBottomSheetBehavior;
     public static final String TASK_TAG_WIFI = "wifi_task";
     private BroadcastReceiver mReceiver;
-    private GcmNetworkManager mGcmNetworkManager;
+     static GcmNetworkManager mGcmNetworkManager;
     private static final String TAG = "MainActivity";
     private static final int RC_PLAY_SERVICES = 123;
+    private FragmentNotificationSettings notificationFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         title_toolbar.setText(R.string.effy);
         title_toolbar.setTextSize(Float.parseFloat("32"));
+        mToolbar.showOverflowMenu();
         Typeface custom_font = Typeface.createFromAsset(getAssets(), "font/BEBAS___.ttf");
         title_toolbar.setTypeface(custom_font);
         //title_toolbar.setGravity(Gravity.CENTER);
@@ -92,7 +94,8 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
         //      r.setGravity(Gravity.CENTER);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null)
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+           // getSupportActionBar().setDisplayShowHomeEnabled(false);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -188,6 +191,13 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
             }
         };
 
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+        if(!pref.contains("notification"))
+        {
+            startPeriodicTask();
+
+        }
+
         // Check that Google Play Services is available, since we need it to use GcmNetworkManager
         // but the API does not use GoogleApiClient, which would normally perform the check
         // automatically.
@@ -218,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
         // For the purposes of this sample, cancel all tasks when the app is stopped.
         //mGcmNetworkManager.cancelAllTasks(MyTaskService.class);
     }
-    public void startPeriodicTask() {
+    public static void startPeriodicTask() {
         Log.d(TAG, "startPeriodicTask");
 
         // [START start_periodic_task]
@@ -232,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
         // [END start_periodic_task]
     }
 
-    public void stopPeriodicTask() {
+    public static void stopPeriodicTask() {
         Log.d(TAG, "stopPeriodicTask");
 
         // [START stop_periodic_task]
@@ -274,7 +284,13 @@ public class MainActivity extends AppCompatActivity implements FragmentAddGoalDi
         if (id == R.id.action_get_quote) {
             Intent intent = new Intent(this, QuoteActivity.class);
             startActivity(intent);
-            //getContentResolver().delete(GoalEntry.makeUriForStock("1"),GoalEntry._ID,null);
+            return true;
+        }
+         if (id == R.id.notification_settings) {
+             FragmentManager fm = getSupportFragmentManager();
+             notificationFragment = FragmentNotificationSettings.newInstance("Notifications",getApplicationContext());
+             notificationFragment.show(fm, "fragment_notification");
+
             return true;
         }
 

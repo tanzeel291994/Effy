@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/get_quote"
-            android:background="@color/accent"
+            android:background="@drawable/my_button"
             android:onClick="getAnotherQuote"
             android:textColor="@color/textColorPrimary" />
     </LinearLayout>

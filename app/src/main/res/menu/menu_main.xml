@@ -7,4 +7,9 @@
         android:orderInCategory="100"
         android:icon="@drawable/ic_format_quote_white_24px"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/notification_settings"
+        android:title="@string/notifications"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
 </menu>

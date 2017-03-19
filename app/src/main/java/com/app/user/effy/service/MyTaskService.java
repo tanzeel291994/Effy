@@ -5,14 +5,17 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import com.app.user.effy.App.Config;
 import com.app.user.effy.MainActivity;
 import com.app.user.effy.QuoteActivity;
 import com.app.user.effy.R;
+import com.app.user.effy.Util.NotificationUtils;
 import com.google.android.gms.gcm.GcmNetworkManager;
 import com.google.android.gms.gcm.GcmTaskService;
 import com.google.android.gms.gcm.TaskParams;
@@ -24,6 +27,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class MyTaskService extends GcmTaskService {
 
@@ -89,11 +94,15 @@ public class MyTaskService extends GcmTaskService {
 // use System.currentTimeMillis() to have a unique ID for the pending intent
             PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
 
-            Notification n  = new Notification.Builder(this)
+
+            Notification n  = new  Notification.Builder(this)
                     .setContentTitle("Effy")
                     .setContentText(obj.get("quoteText").toString())
                     .setContentIntent(pIntent)
-                    .setSmallIcon(R.drawable.ic_add_circle_white_24px)
+                    .setStyle(new  Notification.BigTextStyle().bigText(obj.get("quoteText").toString()))
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),
+                            R.drawable.ic_fiber_manual_record_black_18px))
                     .setAutoCancel(true).build();
 
 
@@ -101,6 +110,8 @@ public class MyTaskService extends GcmTaskService {
                     (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
             notificationManager.notify(0, n);
+           // new NotificationUtils(this).showNotificationMessage("Effy",obj.get("quoteText").toString(),
+             //       DateFormat.getDateTimeInstance().format(new java.util.Date()),intent);
 
             if (response.code() != 200) {
                 return GcmNetworkManager.RESULT_FAILURE;

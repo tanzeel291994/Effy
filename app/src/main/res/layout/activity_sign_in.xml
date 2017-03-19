@@ -39,7 +39,7 @@
         android:id="@+id/skipBtn"
         android:layout_alignParentBottom="true"
         android:layout_width="fill_parent"
-        android:background="@color/accent"
+android:background="@null"
         android:textColor="@color/textColorPrimary"
         android:layout_height="wrap_content"
         android:text="@string/skip"

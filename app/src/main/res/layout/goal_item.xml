@@ -1,88 +1,89 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingTop="8dp"
-    android:paddingStart="0dp"
-    android:paddingEnd="@dimen/activity_vertical_margin">
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:id="@+id/goal_id" />
-    <FrameLayout
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.15">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|start"
-            android:orientation="vertical">
-        <View
-            android:layout_width="8dp"
-            android:layout_height="1dip"
-            android:background="@color/cardview_dark_background"
+        android:orientation="horizontal"
+        android:paddingTop="8dp"
+        >
 
-            android:padding="2dip" />
-            <View
-                android:layout_width="8dp"
-                android:layout_height="1dip"
-                android:background="@color/cardview_dark_background"
-                android:layout_marginTop="8dp"
-                android:padding="2dip" />
-        </LinearLayout>
-        <ImageView
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/goal_id" />
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:id="@+id/punch_hole"
-            android:src="@drawable/ic_fiber_manual_record_black_18px"
-            android:contentDescription="@string/punch_hole" />
+            >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="1dip"
+                    android:background="@color/cardview_dark_background"
+
+                    android:padding="2dip" />
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="1dip"
+                    android:background="@color/cardview_dark_background"
+                    android:layout_marginTop="8dp"
+                    android:padding="2dip" />
+            </LinearLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:id="@+id/punch_hole"
+                android:src="@drawable/ic_fiber_manual_record_black_18px"
+                android:contentDescription="@string/punch_hole" />
 
 
-    </FrameLayout>
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="fill"
-        tools:text="Finish exam"
-        android:id="@+id/goal_name"
-        android:layout_weight="1.65"
-        android:textSize="20sp" />
-
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center">
-
-        <CheckBox
-            android:layout_width="wrap_content"
+        </FrameLayout>
+        <TextView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/chk_imp1"
-            android:enabled="false" />
-    </RelativeLayout>
+            android:layout_gravity="fill"
+            tools:text="Finish exam"
 
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center">
+            android:id="@+id/goal_name"
+            android:layout_weight="1.9"
+            android:textSize="18sp" />
 
-        <CheckBox
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/chk_urg1"
-            android:enabled="false" />
-    </RelativeLayout>
-</LinearLayout>
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chk_imp1"
+                android:enabled="false" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:gravity="center">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chk_urg1"
+                android:enabled="false" />
+        </RelativeLayout>
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dip"

@@ -52,7 +52,7 @@ public class NotificationUtils {
 
 
         // notification icon
-        final int icon = R.mipmap.ic_launcher;
+        final int icon = R.mipmap.ic_launcher_new;
 
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         final PendingIntent resultPendingIntent =
@@ -102,7 +102,7 @@ public class NotificationUtils {
                 .setSound(alarmSound)
                 .setStyle(inboxStyle)
                 .setWhen(getTimeMilliSec(timeStamp))
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.ic_launcher_new)
                 .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
                 .setContentText(message)
                 .build();
@@ -124,7 +124,7 @@ public class NotificationUtils {
                 .setSound(alarmSound)
                 .setStyle(bigPictureStyle)
                 .setWhen(getTimeMilliSec(timeStamp))
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.ic_launcher_new)
                 .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
                 .setContentText(message)
                 .build();

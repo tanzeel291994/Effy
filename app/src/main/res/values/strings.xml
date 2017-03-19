@@ -32,4 +32,10 @@
     <string name="slogan">Eff up your effy quotient,being effective and efficient with Effy app</string>
     <string name="login_error">Could not login</string>
     <string name="punch_hole">punch hole</string>
+    <string name="notifications">Notifications</string>
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
+    <string name="notificaion_title">Daily dose of Inspirational Quotes to keep you Effed up!!</string>
+    <string name="know_what_the_dots_mean">Know what the dots mean!</string>
+    <string name="easy_peasy">EASY PEASY</string>
 </resources>

@@ -28,34 +28,34 @@
             <TextView
                 android:layout_width="8dp"
                 android:layout_height="wrap_content"
-                tools:text="Tasks"
-                android:text="@string/tasks"
                 android:layout_gravity="fill"
-                android:layout_weight="1.5"
-                android:textSize="20sp"
-                android:paddingStart="16dp"
-                android:paddingEnd="8dp"
-                android:textColor="@color/primary_text" />
+                android:layout_marginStart="16dp"
+                android:layout_weight="1.8"
+                android:text="@string/tasks"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/text_size"
+                tools:text="Tasks" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                tools:text="Important"
+                android:layout_weight="1"
                 android:text="@string/important"
-                android:layout_weight="1"
                 android:textAlignment="center"
-                android:textSize="20sp"
-                android:textColor="@color/primary_text" />
+
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/text_size"
+                tools:text="Important" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                tools:text="Urgent"
-                android:text="@string/urgent"
                 android:layout_weight="1"
+                android:text="@string/urgent"
                 android:textAlignment="center"
-                android:textSize="20sp"
-                android:textColor="@color/primary_text" />
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/text_size"
+                tools:text="Urgent" />
         </LinearLayout>
 
         <LinearLayout
@@ -70,6 +70,9 @@
                 android:background="@color/divider"
                 android:padding="4dip" />
         </LinearLayout>
+
+
+
          <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
@@ -165,7 +168,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:text="EASY PEASY       "
+                    android:text="@string/easy_peasy"
                     android:textColor="@color/textColorPrimary"
                     tools:text="GOTTA DO IT NOW"/>
             </LinearLayout>
@@ -185,7 +188,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:text="Know what the dots mean!"
+    android:text="@string/know_what_the_dots_mean"
     android:textColor="@color/textColorPrimary"
     android:background="@color/primary"
     android:id="@+id/colorScheme"

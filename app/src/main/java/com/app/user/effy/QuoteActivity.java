@@ -69,7 +69,7 @@ public class QuoteActivity extends AppCompatActivity {
                 .build();
         mAdView.loadAd(adRequest);
 
-        if(getIntent()!=null)
+        if(getIntent().getStringExtra(("quoteText"))!= null)
         {
             Log.i("tag",getIntent().getStringExtra(("quoteText")));
             quote_body.setText(getIntent().getStringExtra(("quoteText")));
@@ -77,7 +77,10 @@ public class QuoteActivity extends AppCompatActivity {
 
         }
         else
+        {
             new QuoteAsyncTaskLoader(mcontext).loadInBackground();
+
+        }
 
 
     }
